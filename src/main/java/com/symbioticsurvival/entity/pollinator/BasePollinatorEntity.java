@@ -1,5 +1,8 @@
 package com.symbioticsurvival.entity.pollinator;
 
+import com.symbioticsurvival.entity.ai.DefendNestGoal;
+import com.symbioticsurvival.entity.ai.PollinateTreeGoal;
+import com.symbioticsurvival.entity.ai.ReturnToNestGoal;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -20,8 +23,8 @@ public abstract class BasePollinatorEntity extends AnimalEntity {
 
     protected BlockPos linkedNest;
     protected BlockPos linkedTree;
-    protected int pollinationCooldown;
-    protected boolean nestDestroyed;
+    public int pollinationCooldown;
+    public boolean nestDestroyed;
 
     protected final String biomeType;
     protected final boolean isDefensive;
@@ -38,6 +41,8 @@ public abstract class BasePollinatorEntity extends AnimalEntity {
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(1, new EscapeDangerGoal(this, 1.4));
+        this.goalSelector.add(2, new ReturnToNestGoal(this));
+        this.goalSelector.add(3, new PollinateTreeGoal(this));
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 1.0));
         this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 6.0f));
         this.goalSelector.add(7, new LookAroundGoal(this));
@@ -49,10 +54,13 @@ public abstract class BasePollinatorEntity extends AnimalEntity {
     }
 
     /**
-     * Override in defensive pollinator subclasses
+     * Override in defensive pollinator subclasses to add attack behaviors
      */
     protected void initDefensiveGoals() {
-        // TODO: Add defensive goals when combat system is implemented
+        // Add melee attack and targeting goals
+        this.goalSelector.add(1, new MeleeAttackGoal(this, 1.4, false));
+        this.targetSelector.add(1, new DefendNestGoal(this));
+        this.targetSelector.add(2, new RevengeGoal(this));
     }
 
     @Override
@@ -64,8 +72,6 @@ public abstract class BasePollinatorEntity extends AnimalEntity {
             if (pollinationCooldown > 0) {
                 pollinationCooldown--;
             }
-
-            // TODO: Pollination logic when tree linkage is fully implemented
         }
     }
 
@@ -117,20 +123,42 @@ public abstract class BasePollinatorEntity extends AnimalEntity {
         return isDefensive;
     }
 
-    // TODO: NBT serialization when API is stabilized
-    // @Override
-    // protected void writeCustomDataToNbt(NbtCompound nbt) {
-    //     super.writeCustomDataToNbt(nbt);
-    //     if (linkedNest != null) {
-    //         nbt.putLong("LinkedNest", linkedNest.asLong());
-    //     }
-    //     if (linkedTree != null) {
-    //         nbt.putLong("LinkedTree", linkedTree.asLong());
-    //     }
-    //     nbt.putInt("PollinationCooldown", pollinationCooldown);
-    //     nbt.putBoolean("NestDestroyed", nestDestroyed);
-    //     nbt.putString("BiomeType", biomeType);
-    // }
+    // TODO: Entity NBT serialization methods not yet available in 1.21.9 Yarn mappings
+    // Will be implemented when API is clarified
+    /*
+    @Override
+    public void writeCustomDataToNbt(net.minecraft.nbt.NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+
+        if (linkedNest != null) {
+            nbt.putLong("LinkedNest", linkedNest.asLong());
+        }
+
+        if (linkedTree != null) {
+            nbt.putLong("LinkedTree", linkedTree.asLong());
+        }
+
+        nbt.putInt("PollinationCooldown", pollinationCooldown);
+        nbt.putBoolean("NestDestroyed", nestDestroyed);
+        nbt.putString("BiomeType", biomeType);
+    }
+
+    @Override
+    public void readCustomDataFromNbt(net.minecraft.nbt.NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+
+        if (nbt.contains("LinkedNest")) {
+            this.linkedNest = BlockPos.fromLong(nbt.getLong("LinkedNest"));
+        }
+
+        if (nbt.contains("LinkedTree")) {
+            this.linkedTree = BlockPos.fromLong(nbt.getLong("LinkedTree"));
+        }
+
+        this.pollinationCooldown = nbt.getInt("PollinationCooldown");
+        this.nestDestroyed = nbt.getBoolean("NestDestroyed");
+    }
+    */
 
     @Nullable
     @Override

@@ -1,5 +1,8 @@
 package com.symbioticsurvival.entity;
 
+import com.symbioticsurvival.entity.ai.CallPlayerGoal;
+import com.symbioticsurvival.entity.ai.FindNestGoal;
+import com.symbioticsurvival.entity.ai.LeadPlayerToNestGoal;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -32,16 +35,16 @@ public class HoneyguideEntity extends AnimalEntity {
 
     @Override
     protected void initGoals() {
+        FindNestGoal findNestGoal = new FindNestGoal(this);
+
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(1, new EscapeDangerGoal(this, 1.4));
+        this.goalSelector.add(2, new LeadPlayerToNestGoal(this));
+        this.goalSelector.add(3, new CallPlayerGoal(this, findNestGoal));
+        this.goalSelector.add(4, findNestGoal);
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 1.0));
         this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8.0f));
         this.goalSelector.add(7, new LookAroundGoal(this));
-
-        // TODO: Add custom goals when fully implemented
-        // this.goalSelector.add(2, new FindNestGoal(this));
-        // this.goalSelector.add(3, new CallPlayerGoal(this));
-        // this.goalSelector.add(4, new LeadToNestGoal(this));
     }
 
     @Override
@@ -123,5 +126,44 @@ public class HoneyguideEntity extends AnimalEntity {
             .add(EntityAttributes.MOVEMENT_SPEED, 0.3);
     }
 
-    // TODO: NBT serialization when API is stabilized
+    // TODO: Entity NBT serialization methods not yet available in 1.21.9 Yarn mappings
+    // Will be implemented when API is clarified
+    /*
+    @Override
+    public void writeCustomDataToNbt(net.minecraft.nbt.NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+
+        if (targetPlayer != null) {
+            nbt.putString("TargetPlayer", targetPlayer.toString());
+        }
+
+        if (targetNest != null) {
+            nbt.putLong("TargetNest", targetNest.asLong());
+        }
+
+        nbt.putInt("LeadingTimeout", leadingTimeout);
+        nbt.putBoolean("IsLeading", isLeading);
+    }
+
+    @Override
+    public void readCustomDataFromNbt(net.minecraft.nbt.NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+
+        if (nbt.contains("TargetPlayer")) {
+            try {
+                String uuidString = nbt.getString("TargetPlayer");
+                this.targetPlayer = UUID.fromString(uuidString);
+            } catch (IllegalArgumentException e) {
+                this.targetPlayer = null;
+            }
+        }
+
+        if (nbt.contains("TargetNest")) {
+            this.targetNest = BlockPos.fromLong(nbt.getLong("TargetNest"));
+        }
+
+        this.leadingTimeout = nbt.getInt("LeadingTimeout");
+        this.isLeading = nbt.getBoolean("IsLeading");
+    }
+    */
 }

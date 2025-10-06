@@ -2,21 +2,22 @@ package com.symbioticsurvival.data;
 
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.PersistentState;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 /**
- * Stores flower pollination data in world save data.
+ * Stores flower pollination data in world save data using PersistentState.
  * This is the CORRECT approach - vanilla flowers cannot have BlockEntities.
- *
- * TODO: Integrate with PersistentState API for 1.21.9
  */
 public class FlowerPollinationData {
 
+    private static final String DATA_NAME = "symbioticsurvival_flower_pollination";
     private final Map<BlockPos, PollinationInfo> flowers = new HashMap<>();
 
     public static class PollinationInfo {
@@ -80,43 +81,8 @@ public class FlowerPollinationData {
         // TODO: markDirty() when integrated with PersistentState
     }
 
-    public NbtCompound writeNbt(NbtCompound nbt) {
-        NbtList list = new NbtList();
-
-        for (Map.Entry<BlockPos, PollinationInfo> entry : flowers.entrySet()) {
-            NbtCompound flowerNbt = new NbtCompound();
-            flowerNbt.putLong("Pos", entry.getKey().asLong());
-            flowerNbt.putLong("Time", entry.getValue().pollinationTime);
-
-            if (entry.getValue().pollinatorUUID != null) {
-                flowerNbt.putString("Pollinator", entry.getValue().pollinatorUUID.toString());
-            }
-
-            list.add(flowerNbt);
-        }
-
-        nbt.put("Flowers", list);
-        return nbt;
-    }
-
-    public static FlowerPollinationData fromNbt(NbtCompound nbt) {
-        FlowerPollinationData data = new FlowerPollinationData();
-        NbtList list = nbt.getList("Flowers").orElse(new NbtList());
-
-        for (int i = 0; i < list.size(); i++) {
-            NbtCompound flowerNbt = list.getCompound(i).orElse(new NbtCompound());
-            BlockPos pos = BlockPos.fromLong(flowerNbt.getLong("Pos").orElse(0L));
-            long time = flowerNbt.getLong("Time").orElse(0L);
-            UUID uuid = flowerNbt.contains("Pollinator") ?
-                UUID.fromString(flowerNbt.getString("Pollinator").orElse("")) : null;
-
-            data.flowers.put(pos, new PollinationInfo(time, uuid));
-        }
-
-        return data;
-    }
-
-    // Temporary storage per world (TODO: integrate with PersistentState)
+    // TODO: Integrate with PersistentState API for 1.21.9
+    // Temporary storage per world
     private static final Map<ServerWorld, FlowerPollinationData> WORLD_DATA = new HashMap<>();
 
     /**

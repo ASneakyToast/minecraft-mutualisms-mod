@@ -1,9 +1,12 @@
 package com.symbioticsurvival.block.entity;
 
 import com.symbioticsurvival.SymbioticSurvival;
+import com.symbioticsurvival.entity.pollinator.BasePollinatorEntity;
 import com.symbioticsurvival.registry.ModBlockEntities;
+import com.symbioticsurvival.registry.ModEntities;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.registry.RegistryWrapper;
@@ -61,8 +64,63 @@ public class PollinatorNestBlockEntity extends BlockEntity {
         // Don't spawn if too many active
         if (activePollinators.size() >= 2) return;
 
-        // TODO: Pollinator spawning logic when entities are implemented
-        // Would create entity based on biomeType
+        // TODO: Pollinator spawning logic when EntityType.create API is clarified for 1.21.9
+        // Currently the create() method signature has changed and needs research
+        /*
+        if (world == null) return;
+
+        // Get entity type based on biome type
+        EntityType<? extends BasePollinatorEntity> entityType = getEntityTypeForBiome(biomeType);
+        if (entityType == null) return;
+
+        // Create entity
+        BasePollinatorEntity pollinator = entityType.create(world);
+        if (pollinator == null) return;
+
+        // Position near nest (with random offset)
+        double offsetX = world.random.nextDouble() * 2 - 1; // -1 to 1
+        double offsetZ = world.random.nextDouble() * 2 - 1;
+        pollinator.refreshPositionAndAngles(
+            pos.getX() + 0.5 + offsetX,
+            pos.getY() + 1,
+            pos.getZ() + 0.5 + offsetZ,
+            world.random.nextFloat() * 360f,
+            0
+        );
+
+        // Link pollinator to nest and tree
+        pollinator.linkToNest(pos);
+        if (linkedTree != null) {
+            pollinator.linkToTree(linkedTree);
+        }
+
+        // Spawn entity
+        if (world.spawnEntity(pollinator)) {
+            activePollinators.add(pollinator.getUuid());
+            markDirty();
+
+            if (SymbioticSurvival.CONFIG.debug.enableDebugLogging) {
+                SymbioticSurvival.LOGGER.info("Spawned {} at {} from nest at {}",
+                    pollinator.getType().getTranslationKey(), pollinator.getBlockPos(), pos);
+            }
+        }
+        */
+    }
+
+    private EntityType<? extends BasePollinatorEntity> getEntityTypeForBiome(String biomeType) {
+        return switch (biomeType) {
+            case "tropical" -> ModEntities.FIG_WASP;
+            case "desert" -> ModEntities.YUCCA_MOTH;
+            case "savanna" -> ModEntities.MASON_WASP;
+            case "taiga" -> ModEntities.SAWFLY;
+            case "plains" -> ModEntities.MONARCH_BUTTERFLY;
+            case "swamp" -> ModEntities.MANGROVE_POLLINATOR;
+            case "mushroom" -> ModEntities.FUNGUS_GNAT;
+            case "birch_forest" -> ModEntities.BIRCH_POLLINATOR;
+            case "cherry_grove" -> ModEntities.ORCHARD_BEE;
+            case "snowy" -> ModEntities.BUMBLEBEE;
+            default -> null;
+        };
     }
 
     private void cleanupPollinators() {
@@ -112,4 +170,49 @@ public class PollinatorNestBlockEntity extends BlockEntity {
     }
 
     // TODO: NBT Serialization (API changed in 1.21.9, needs research)
+    // Block entity data will be reset on world reload until this is implemented
+    /*
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        if (linkedTree != null) {
+            nbt.putLong("LinkedTree", linkedTree.asLong());
+        }
+
+        nbt.putString("BiomeType", biomeType);
+        nbt.putInt("PollinationCooldown", pollinationCooldown);
+
+        // Save active pollinators list as strings
+        NbtList pollinatorsList = new NbtList();
+        for (UUID uuid : activePollinators) {
+            NbtCompound uuidNbt = new NbtCompound();
+            uuidNbt.putString("UUID", uuid.toString());
+            pollinatorsList.add(uuidNbt);
+        }
+        nbt.put("ActivePollinators", pollinatorsList);
+    }
+
+    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        if (nbt.contains("LinkedTree")) {
+            this.linkedTree = BlockPos.fromLong(nbt.getLong("LinkedTree"));
+        }
+
+        this.biomeType = nbt.getString("BiomeType");
+        this.pollinationCooldown = nbt.getInt("PollinationCooldown");
+
+        // Load active pollinators list
+        this.activePollinators.clear();
+        if (nbt.contains("ActivePollinators", 9)) { // 9 is list type
+            NbtList pollinatorsList = nbt.getList("ActivePollinators", 10); // 10 is compound type
+            for (int i = 0; i < pollinatorsList.size(); i++) {
+                NbtCompound uuidNbt = pollinatorsList.getCompound(i);
+                if (uuidNbt != null && uuidNbt.contains("UUID", 8)) { // 8 is string type
+                    try {
+                        this.activePollinators.add(UUID.fromString(uuidNbt.getString("UUID")));
+                    } catch (IllegalArgumentException e) {
+                        // Skip invalid UUIDs
+                    }
+                }
+            }
+        }
+    }
+    */
 }

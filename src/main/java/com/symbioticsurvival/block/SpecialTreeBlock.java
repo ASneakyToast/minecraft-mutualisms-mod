@@ -121,11 +121,34 @@ public class SpecialTreeBlock extends BlockWithEntity {
     @Override
     public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         if (!world.isClient() && state.get(FRUIT_STATE) == 2) {
-            // TODO: Drop mature fruit when fruit items are implemented
-            // dropStack(world, pos, new ItemStack(getFruitItem()));
+            // Drop fruit based on biome type
+            ItemStack fruit = getFruitForBiome();
+            if (fruit != null) {
+                dropStack(world, pos, fruit);
+            }
         }
 
         return super.onBreak(world, pos, state, player);
+    }
+
+    /**
+     * Get the appropriate fruit item for this tree's biome type.
+     * Returns vanilla items that thematically match each biome.
+     */
+    private ItemStack getFruitForBiome() {
+        return switch (biomeType) {
+            case "tropical" -> new ItemStack(net.minecraft.item.Items.APPLE, 2);
+            case "desert" -> new ItemStack(net.minecraft.item.Items.SWEET_BERRIES, 3);
+            case "savanna" -> new ItemStack(net.minecraft.item.Items.APPLE, 2);
+            case "taiga" -> new ItemStack(net.minecraft.item.Items.SWEET_BERRIES, 3);
+            case "plains" -> new ItemStack(net.minecraft.item.Items.GLOW_BERRIES, 2);
+            case "swamp" -> new ItemStack(net.minecraft.item.Items.APPLE, 2);
+            case "mushroom" -> new ItemStack(net.minecraft.item.Items.BROWN_MUSHROOM, 3);
+            case "birch_forest" -> new ItemStack(net.minecraft.item.Items.APPLE, 2);
+            case "cherry_grove" -> new ItemStack(net.minecraft.item.Items.APPLE, 2);
+            case "snowy" -> new ItemStack(net.minecraft.item.Items.SWEET_BERRIES, 2);
+            default -> new ItemStack(net.minecraft.item.Items.APPLE, 1);
+        };
     }
 
     public String getBiomeType() {
