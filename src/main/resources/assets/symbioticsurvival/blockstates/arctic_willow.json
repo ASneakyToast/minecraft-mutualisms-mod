@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "fruit_state=0": {
+      "model": "symbioticsurvival:block/arctic_willow_0"
+    },
+    "fruit_state=1": {
+      "model": "symbioticsurvival:block/arctic_willow_1"
+    },
+    "fruit_state=2": {
+      "model": "symbioticsurvival:block/arctic_willow_2"
+    }
+  }
+}

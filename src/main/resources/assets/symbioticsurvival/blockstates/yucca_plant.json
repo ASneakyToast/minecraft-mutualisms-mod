@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "fruit_state=0": {
+      "model": "symbioticsurvival:block/yucca_plant_0"
+    },
+    "fruit_state=1": {
+      "model": "symbioticsurvival:block/yucca_plant_1"
+    },
+    "fruit_state=2": {
+      "model": "symbioticsurvival:block/yucca_plant_2"
+    }
+  }
+}

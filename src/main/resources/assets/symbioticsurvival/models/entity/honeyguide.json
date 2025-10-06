@@ -1,0 +1,103 @@
+{
+  "texture_size": [64, 64],
+  "models": [
+    {
+      "part": "head",
+      "id": "head",
+      "invertAxis": "xy",
+      "translate": [0, -18, 4],
+      "boxes": [
+        {
+          "coordinates": [-2, 18, -6, 4, 4, 4],
+          "textureOffset": [0, 0]
+        }
+      ],
+      "children": [
+        {
+          "part": "beak",
+          "id": "beak",
+          "invertAxis": "xy",
+          "translate": [0, 0, 0],
+          "boxes": [
+            {
+              "coordinates": [-1, 18, -8, 2, 2, 2],
+              "textureOffset": [16, 0]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "part": "body",
+      "id": "body",
+      "invertAxis": "xy",
+      "translate": [0, -16, 0],
+      "boxes": [
+        {
+          "coordinates": [-3, 12, -2, 6, 8, 6],
+          "textureOffset": [0, 9]
+        }
+      ]
+    },
+    {
+      "part": "tail",
+      "id": "tail",
+      "invertAxis": "xy",
+      "translate": [0, -15, -4],
+      "boxes": [
+        {
+          "coordinates": [-2, 12, 4, 4, 6, 1],
+          "textureOffset": [24, 0]
+        }
+      ]
+    },
+    {
+      "part": "left_wing",
+      "id": "left_wing",
+      "invertAxis": "xy",
+      "translate": [-3, -16, 0],
+      "boxes": [
+        {
+          "coordinates": [-6, 13, -1, 6, 7, 1],
+          "textureOffset": [0, 24]
+        }
+      ]
+    },
+    {
+      "part": "right_wing",
+      "id": "right_wing",
+      "invertAxis": "xy",
+      "translate": [3, -16, 0],
+      "boxes": [
+        {
+          "coordinates": [0, 13, -1, 6, 7, 1],
+          "textureOffset": [14, 24]
+        }
+      ]
+    },
+    {
+      "part": "left_leg",
+      "id": "left_leg",
+      "invertAxis": "xy",
+      "translate": [-1.5, -12, 0],
+      "boxes": [
+        {
+          "coordinates": [-2, 8, -1, 1, 4, 1],
+          "textureOffset": [28, 24]
+        }
+      ]
+    },
+    {
+      "part": "right_leg",
+      "id": "right_leg",
+      "invertAxis": "xy",
+      "translate": [1.5, -12, 0],
+      "boxes": [
+        {
+          "coordinates": [1, 8, -1, 1, 4, 1],
+          "textureOffset": [32, 24]
+        }
+      ]
+    }
+  ]
+}

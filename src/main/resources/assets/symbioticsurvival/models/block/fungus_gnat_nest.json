@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "symbioticsurvival:block/fungus_gnat_nest"
+  }
+}

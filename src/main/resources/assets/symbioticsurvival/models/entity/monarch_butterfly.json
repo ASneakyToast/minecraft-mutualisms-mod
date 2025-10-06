@@ -1,0 +1,191 @@
+{
+  "texture_size": [64, 64],
+  "models": [
+    {
+      "part": "head",
+      "id": "head",
+      "invertAxis": "xy",
+      "translate": [0, -20, 2],
+      "boxes": [
+        {
+          "coordinates": [-1, 19, -3, 2, 2, 2],
+          "textureOffset": [0, 0]
+        }
+      ],
+      "children": [
+        {
+          "part": "antenna_left",
+          "id": "antenna_left",
+          "invertAxis": "xy",
+          "translate": [-0.5, 21, -2],
+          "boxes": [
+            {
+              "coordinates": [-1, 21, -3, 0.5, 3, 0.5],
+              "textureOffset": [8, 0]
+            },
+            {
+              "coordinates": [-1.5, 24, -3, 1, 1, 1],
+              "textureOffset": [11, 0]
+            }
+          ]
+        },
+        {
+          "part": "antenna_right",
+          "id": "antenna_right",
+          "invertAxis": "xy",
+          "translate": [0.5, 21, -2],
+          "boxes": [
+            {
+              "coordinates": [0.5, 21, -3, 0.5, 3, 0.5],
+              "textureOffset": [14, 0]
+            },
+            {
+              "coordinates": [0.5, 24, -3, 1, 1, 1],
+              "textureOffset": [17, 0]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "part": "thorax",
+      "id": "thorax",
+      "invertAxis": "xy",
+      "translate": [0, -19, 0],
+      "boxes": [
+        {
+          "coordinates": [-1, 17, -1, 2, 2, 3],
+          "textureOffset": [0, 5]
+        }
+      ]
+    },
+    {
+      "part": "abdomen",
+      "id": "abdomen",
+      "invertAxis": "xy",
+      "translate": [0, -18, -2],
+      "boxes": [
+        {
+          "coordinates": [-1, 16, 2, 2, 2, 1.5],
+          "textureOffset": [0, 11]
+        },
+        {
+          "coordinates": [-1, 15.5, 3.5, 2, 1.5, 1.5],
+          "textureOffset": [8, 11]
+        },
+        {
+          "coordinates": [-0.5, 15, 5, 1, 1.5, 1.5],
+          "textureOffset": [14, 11]
+        },
+        {
+          "coordinates": [-0.5, 14.5, 6.5, 1, 1.5, 1.5],
+          "textureOffset": [19, 11]
+        },
+        {
+          "coordinates": [-0.5, 14, 8, 1, 1.5, 1.5],
+          "textureOffset": [24, 11]
+        },
+        {
+          "coordinates": [-0.5, 13.5, 9.5, 1, 1, 1],
+          "textureOffset": [29, 11]
+        }
+      ]
+    },
+    {
+      "part": "left_wing",
+      "id": "left_wing",
+      "invertAxis": "xy",
+      "translate": [-1, -19, 0],
+      "boxes": [
+        {
+          "coordinates": [-17, 17, -2, 16, 0.5, 12],
+          "textureOffset": [0, 20]
+        }
+      ]
+    },
+    {
+      "part": "right_wing",
+      "id": "right_wing",
+      "invertAxis": "xy",
+      "translate": [1, -19, 0],
+      "boxes": [
+        {
+          "coordinates": [1, 17, -2, 16, 0.5, 12],
+          "textureOffset": [0, 33]
+        }
+      ]
+    },
+    {
+      "part": "leg_left_front",
+      "id": "leg_left_front",
+      "invertAxis": "xy",
+      "translate": [-0.5, -17, -0.5],
+      "boxes": [
+        {
+          "coordinates": [-1, 14, -0.5, 0.5, 3, 0.5],
+          "textureOffset": [32, 20]
+        }
+      ]
+    },
+    {
+      "part": "leg_right_front",
+      "id": "leg_right_front",
+      "invertAxis": "xy",
+      "translate": [0.5, -17, -0.5],
+      "boxes": [
+        {
+          "coordinates": [0.5, 14, -0.5, 0.5, 3, 0.5],
+          "textureOffset": [34, 20]
+        }
+      ]
+    },
+    {
+      "part": "leg_left_middle",
+      "id": "leg_left_middle",
+      "invertAxis": "xy",
+      "translate": [-0.5, -17, 0.5],
+      "boxes": [
+        {
+          "coordinates": [-1, 14, 0.5, 0.5, 3, 0.5],
+          "textureOffset": [36, 20]
+        }
+      ]
+    },
+    {
+      "part": "leg_right_middle",
+      "id": "leg_right_middle",
+      "invertAxis": "xy",
+      "translate": [0.5, -17, 0.5],
+      "boxes": [
+        {
+          "coordinates": [0.5, 14, 0.5, 0.5, 3, 0.5],
+          "textureOffset": [38, 20]
+        }
+      ]
+    },
+    {
+      "part": "leg_left_back",
+      "id": "leg_left_back",
+      "invertAxis": "xy",
+      "translate": [-0.5, -17, 1.5],
+      "boxes": [
+        {
+          "coordinates": [-1, 14, 1.5, 0.5, 3, 0.5],
+          "textureOffset": [40, 20]
+        }
+      ]
+    },
+    {
+      "part": "leg_right_back",
+      "id": "leg_right_back",
+      "invertAxis": "xy",
+      "translate": [0.5, -17, 1.5],
+      "boxes": [
+        {
+          "coordinates": [0.5, 14, 1.5, 0.5, 3, 0.5],
+          "textureOffset": [42, 20]
+        }
+      ]
+    }
+  ]
+}

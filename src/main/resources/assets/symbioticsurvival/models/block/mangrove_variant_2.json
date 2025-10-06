@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "symbioticsurvival:block/mangrove_variant_2"
+  }
+}
