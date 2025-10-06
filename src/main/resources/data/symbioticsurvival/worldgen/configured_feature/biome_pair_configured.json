@@ -1,0 +1,7 @@
+{
+  "type": "symbioticsurvival:biome_pair",
+  "config": {
+    "nest_max_distance": 20,
+    "placement_attempts": 8
+  }
+}

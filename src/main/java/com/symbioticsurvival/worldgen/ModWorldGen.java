@@ -25,10 +25,7 @@ public class ModWorldGen {
     public static void initialize() {
         SymbioticSurvival.LOGGER.info("Initializing world generation for " + SymbioticSurvival.MOD_ID);
 
-        // TODO: Temporarily disabled until worldgen data files are created
         // Add biome pair features to appropriate biomes
-        // This adds the feature to all biomes that have pairs registered
-        /*
         BiomeModifications.addFeature(
             // Only add to biomes that have registered pairs
             BiomeSelectors.includeByKey(
@@ -50,10 +47,5 @@ public class ModWorldGen {
         if (SymbioticSurvival.CONFIG.debug.enableDebugLogging) {
             SymbioticSurvival.LOGGER.info("Added biome pair features to 10 biomes");
         }
-        */
     }
-
-    // TODO: Need to create data-driven configured and placed features
-    // This will require creating JSON files in src/main/resources/data/symbioticsurvival/worldgen/
-    // For now, the biome modification is set up but will need the feature definitions
 }

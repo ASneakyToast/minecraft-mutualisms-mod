@@ -7,6 +7,7 @@ import com.symbioticsurvival.block.SpecialTreeBlock;
 import com.symbioticsurvival.block.entity.PollinatorNestBlockEntity;
 import com.symbioticsurvival.block.entity.SpecialTreeBlockEntity;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
@@ -54,11 +55,8 @@ public class BiomePairFeature extends Feature<BiomePairConfig> {
             return false;
         }
 
-        // Place the tree
-        BlockState treeState = pair.treeBlock.getDefaultState()
-            .with(SpecialTreeBlock.FRUIT_STATE, 0); // Start with immature fruit
-
-        if (!world.setBlockState(treePos, treeState, 3)) {
+        // Generate the tree structure
+        if (!generateSimpleTree(world, treePos, pair.treeBlock, pair.biomeType, random)) {
             return false;
         }
 
@@ -86,6 +84,130 @@ public class BiomePairFeature extends Feature<BiomePairConfig> {
                 "Generated tree-nest pair at tree={}, nest={}, biome={}",
                 treePos, nestPos, pair.biomeType
             );
+        }
+
+        return true;
+    }
+
+    /**
+     * Generate a simple tree structure with trunk and foliage.
+     * Tree size and shape vary by biome type.
+     */
+    private boolean generateSimpleTree(StructureWorldAccess world, BlockPos basePos,
+                                      net.minecraft.block.Block treeBlock, String biomeType, Random random) {
+        // Determine tree dimensions based on biome type
+        int trunkHeight;
+        int canopyRadius;
+        BlockState foliageState;
+
+        switch (biomeType) {
+            case "desert" -> {
+                // Yucca: Short, thin plant
+                trunkHeight = 2 + random.nextInt(2); // 2-3 blocks
+                canopyRadius = 1;
+                foliageState = Blocks.ACACIA_LEAVES.getDefaultState();
+            }
+            case "tropical" -> {
+                // Fig tree: Tall with wide canopy
+                trunkHeight = 5 + random.nextInt(3); // 5-7 blocks
+                canopyRadius = 2;
+                foliageState = Blocks.JUNGLE_LEAVES.getDefaultState();
+            }
+            case "savanna" -> {
+                // Acacia variant: Medium height, wide canopy
+                trunkHeight = 4 + random.nextInt(2); // 4-5 blocks
+                canopyRadius = 2;
+                foliageState = Blocks.ACACIA_LEAVES.getDefaultState();
+            }
+            case "taiga" -> {
+                // Conifer: Tall and narrow
+                trunkHeight = 6 + random.nextInt(3); // 6-8 blocks
+                canopyRadius = 1;
+                foliageState = Blocks.SPRUCE_LEAVES.getDefaultState();
+            }
+            case "plains" -> {
+                // Milkweed: Very short, more like a tall flower
+                trunkHeight = 1 + random.nextInt(2); // 1-2 blocks
+                canopyRadius = 0; // No canopy, just the plant itself
+                foliageState = Blocks.FLOWERING_AZALEA_LEAVES.getDefaultState();
+            }
+            case "swamp" -> {
+                // Mangrove variant: Medium with hanging leaves
+                trunkHeight = 4 + random.nextInt(2); // 4-5 blocks
+                canopyRadius = 2;
+                foliageState = Blocks.MANGROVE_LEAVES.getDefaultState();
+            }
+            case "mushroom" -> {
+                // Glowing mushroom: Short, wide cap
+                trunkHeight = 3 + random.nextInt(2); // 3-4 blocks
+                canopyRadius = 2;
+                foliageState = Blocks.BROWN_MUSHROOM_BLOCK.getDefaultState();
+            }
+            case "birch_forest" -> {
+                // Flowering birch: Tall, narrow
+                trunkHeight = 5 + random.nextInt(2); // 5-6 blocks
+                canopyRadius = 1;
+                foliageState = Blocks.BIRCH_LEAVES.getDefaultState();
+            }
+            case "cherry_grove" -> {
+                // Enhanced cherry: Medium with pink leaves
+                trunkHeight = 4 + random.nextInt(2); // 4-5 blocks
+                canopyRadius = 2;
+                foliageState = Blocks.CHERRY_LEAVES.getDefaultState();
+            }
+            case "snowy" -> {
+                // Arctic willow: Short, bushy
+                trunkHeight = 3 + random.nextInt(2); // 3-4 blocks
+                canopyRadius = 1;
+                foliageState = Blocks.SPRUCE_LEAVES.getDefaultState();
+            }
+            default -> {
+                // Default tree
+                trunkHeight = 4 + random.nextInt(2);
+                canopyRadius = 1;
+                foliageState = Blocks.OAK_LEAVES.getDefaultState();
+            }
+        }
+
+        // Place trunk blocks
+        BlockState trunkState = treeBlock.getDefaultState();
+        for (int y = 0; y < trunkHeight; y++) {
+            BlockPos trunkPos = basePos.up(y);
+
+            // First block gets fruit state property
+            if (y == 0) {
+                trunkState = trunkState.with(SpecialTreeBlock.FRUIT_STATE, 0);
+            }
+
+            if (!world.setBlockState(trunkPos, trunkState, 3)) {
+                return false; // Failed to place trunk
+            }
+        }
+
+        // Place canopy (if radius > 0)
+        if (canopyRadius > 0) {
+            BlockPos canopyCenter = basePos.up(trunkHeight);
+
+            for (int x = -canopyRadius; x <= canopyRadius; x++) {
+                for (int z = -canopyRadius; z <= canopyRadius; z++) {
+                    for (int y = -1; y <= 1; y++) {
+                        BlockPos leafPos = canopyCenter.add(x, y, z);
+
+                        // Skip center column (where trunk is)
+                        if (x == 0 && z == 0 && y <= 0) continue;
+
+                        // Simple distance check for rounded canopy
+                        double distance = Math.sqrt(x * x + z * z);
+                        if (distance <= canopyRadius + 0.5) {
+                            // Only place if air or replaceable
+                            if (world.getBlockState(leafPos).isAir() ||
+                                world.getBlockState(leafPos).isReplaceable()) {
+                                world.setBlockState(leafPos, foliageState, 3);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         return true;

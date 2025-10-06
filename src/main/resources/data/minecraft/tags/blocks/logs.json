@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "symbioticsurvival:fig_tree",
+    "symbioticsurvival:yucca_plant",
+    "symbioticsurvival:acacia_variant",
+    "symbioticsurvival:conifer_variant",
+    "symbioticsurvival:milkweed",
+    "symbioticsurvival:mangrove_variant",
+    "symbioticsurvival:glowing_mushroom",
+    "symbioticsurvival:flowering_birch",
+    "symbioticsurvival:enhanced_cherry",
+    "symbioticsurvival:arctic_willow"
+  ]
+}
