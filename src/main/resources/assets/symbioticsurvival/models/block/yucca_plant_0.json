@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/cube_column",
   "textures": {
-    "all": "symbioticsurvival:block/yucca_plant_0"
+    "end": "symbioticsurvival:block/yucca_plant_0_top",
+    "side": "symbioticsurvival:block/yucca_plant_0"
   }
 }

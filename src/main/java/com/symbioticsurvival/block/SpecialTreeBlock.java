@@ -1,12 +1,12 @@
 package com.symbioticsurvival.block;
 
-import com.mojang.serialization.MapCodec;
 import com.symbioticsurvival.block.entity.SpecialTreeBlockEntity;
 import com.symbioticsurvival.registry.ModBlockEntities;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.PillarBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -23,14 +23,9 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Base class for special trees that require pollination.
  * Manages fruit growth states and tree-nest linkage.
+ * Extends PillarBlock for proper log behavior (directional placement, leaf support).
  */
-public class SpecialTreeBlock extends BlockWithEntity {
-
-    // TODO: Implement Codec in 1.21.9
-    @Override
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
-        throw new UnsupportedOperationException("Codec not yet implemented");
-    }
+public class SpecialTreeBlock extends PillarBlock implements BlockEntityProvider {
 
     // Fruit states: 0=immature, 1=pollinated, 2=mature
     public static final IntProperty FRUIT_STATE = IntProperty.of("fruit_state", 0, 2);
@@ -40,12 +35,16 @@ public class SpecialTreeBlock extends BlockWithEntity {
     public SpecialTreeBlock(Settings settings, String biomeType) {
         super(settings);
         this.biomeType = biomeType;
-        setDefaultState(getDefaultState().with(FRUIT_STATE, 0));
+        // Set default state with both AXIS (from PillarBlock) and FRUIT_STATE
+        setDefaultState(getDefaultState()
+            .with(AXIS, net.minecraft.util.math.Direction.Axis.Y)
+            .with(FRUIT_STATE, 0));
     }
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(FRUIT_STATE);
+        // Add both AXIS (from PillarBlock) and FRUIT_STATE
+        builder.add(AXIS, FRUIT_STATE);
     }
 
     @Override
@@ -64,11 +63,14 @@ public class SpecialTreeBlock extends BlockWithEntity {
             World world,
             BlockState state,
             BlockEntityType<T> type) {
-        return validateTicker(
-            type,
-            ModBlockEntities.SPECIAL_TREE,
-            SpecialTreeBlockEntity::tick
-        );
+        if (world.isClient()) {
+            return null;
+        }
+        // Check if the type matches our block entity type
+        if (type == ModBlockEntities.SPECIAL_TREE) {
+            return (BlockEntityTicker<T>) (BlockEntityTicker<SpecialTreeBlockEntity>) SpecialTreeBlockEntity::tick;
+        }
+        return null;
     }
 
     @Override

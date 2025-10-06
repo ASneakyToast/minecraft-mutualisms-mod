@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/cube_column",
   "textures": {
-    "all": "symbioticsurvival:block/glowing_mushroom_1"
+    "end": "symbioticsurvival:block/glowing_mushroom_1_top",
+    "side": "symbioticsurvival:block/glowing_mushroom_1"
   }
 }

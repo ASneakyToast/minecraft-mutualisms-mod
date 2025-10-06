@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/cube_column",
   "textures": {
-    "all": "symbioticsurvival:block/mangrove_variant_1"
+    "end": "symbioticsurvival:block/mangrove_variant_1_top",
+    "side": "symbioticsurvival:block/mangrove_variant_1"
   }
 }

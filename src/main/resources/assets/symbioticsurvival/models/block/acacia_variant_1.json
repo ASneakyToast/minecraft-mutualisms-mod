@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/cube_column",
   "textures": {
-    "all": "symbioticsurvival:block/acacia_variant_1"
+    "end": "symbioticsurvival:block/acacia_variant_1_top",
+    "side": "symbioticsurvival:block/acacia_variant_1"
   }
 }

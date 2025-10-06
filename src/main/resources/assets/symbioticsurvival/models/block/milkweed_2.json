@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/cube_column",
   "textures": {
-    "all": "symbioticsurvival:block/milkweed_2"
+    "end": "symbioticsurvival:block/milkweed_2_top",
+    "side": "symbioticsurvival:block/milkweed_2"
   }
 }

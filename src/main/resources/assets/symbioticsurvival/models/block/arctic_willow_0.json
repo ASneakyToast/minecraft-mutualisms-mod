@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/cube_column",
   "textures": {
-    "all": "symbioticsurvival:block/arctic_willow_0"
+    "end": "symbioticsurvival:block/arctic_willow_0_top",
+    "side": "symbioticsurvival:block/arctic_willow_0"
   }
 }

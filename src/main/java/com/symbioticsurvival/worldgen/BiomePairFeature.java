@@ -6,10 +6,14 @@ import com.symbioticsurvival.block.PollinatorNestBlock;
 import com.symbioticsurvival.block.SpecialTreeBlock;
 import com.symbioticsurvival.block.entity.PollinatorNestBlockEntity;
 import com.symbioticsurvival.block.entity.SpecialTreeBlockEntity;
+import com.symbioticsurvival.registry.ModBlocks;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.block.LeavesBlock;
+import net.minecraft.block.PillarBlock;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.biome.Biome;
@@ -105,79 +109,77 @@ public class BiomePairFeature extends Feature<BiomePairConfig> {
                 // Yucca: Short, thin plant
                 trunkHeight = 2 + random.nextInt(2); // 2-3 blocks
                 canopyRadius = 1;
-                foliageState = Blocks.ACACIA_LEAVES.getDefaultState();
+                foliageState = ModBlocks.YUCCA_LEAVES.getDefaultState();
             }
             case "tropical" -> {
                 // Fig tree: Tall with wide canopy
                 trunkHeight = 5 + random.nextInt(3); // 5-7 blocks
                 canopyRadius = 2;
-                foliageState = Blocks.JUNGLE_LEAVES.getDefaultState();
+                foliageState = ModBlocks.FIG_LEAVES.getDefaultState();
             }
             case "savanna" -> {
                 // Acacia variant: Medium height, wide canopy
                 trunkHeight = 4 + random.nextInt(2); // 4-5 blocks
                 canopyRadius = 2;
-                foliageState = Blocks.ACACIA_LEAVES.getDefaultState();
+                foliageState = ModBlocks.ACACIA_VARIANT_LEAVES.getDefaultState();
             }
             case "taiga" -> {
                 // Conifer: Tall and narrow
                 trunkHeight = 6 + random.nextInt(3); // 6-8 blocks
                 canopyRadius = 1;
-                foliageState = Blocks.SPRUCE_LEAVES.getDefaultState();
+                foliageState = ModBlocks.CONIFER_VARIANT_LEAVES.getDefaultState();
             }
             case "plains" -> {
                 // Milkweed: Very short, more like a tall flower
                 trunkHeight = 1 + random.nextInt(2); // 1-2 blocks
                 canopyRadius = 0; // No canopy, just the plant itself
-                foliageState = Blocks.FLOWERING_AZALEA_LEAVES.getDefaultState();
+                foliageState = ModBlocks.MILKWEED_LEAVES.getDefaultState();
             }
             case "swamp" -> {
                 // Mangrove variant: Medium with hanging leaves
                 trunkHeight = 4 + random.nextInt(2); // 4-5 blocks
                 canopyRadius = 2;
-                foliageState = Blocks.MANGROVE_LEAVES.getDefaultState();
+                foliageState = ModBlocks.MANGROVE_VARIANT_LEAVES.getDefaultState();
             }
             case "mushroom" -> {
                 // Glowing mushroom: Short, wide cap
                 trunkHeight = 3 + random.nextInt(2); // 3-4 blocks
                 canopyRadius = 2;
-                foliageState = Blocks.BROWN_MUSHROOM_BLOCK.getDefaultState();
+                foliageState = ModBlocks.GLOWING_MUSHROOM_LEAVES.getDefaultState();
             }
             case "birch_forest" -> {
                 // Flowering birch: Tall, narrow
                 trunkHeight = 5 + random.nextInt(2); // 5-6 blocks
                 canopyRadius = 1;
-                foliageState = Blocks.BIRCH_LEAVES.getDefaultState();
+                foliageState = ModBlocks.FLOWERING_BIRCH_LEAVES.getDefaultState();
             }
             case "cherry_grove" -> {
                 // Enhanced cherry: Medium with pink leaves
                 trunkHeight = 4 + random.nextInt(2); // 4-5 blocks
                 canopyRadius = 2;
-                foliageState = Blocks.CHERRY_LEAVES.getDefaultState();
+                foliageState = ModBlocks.ENHANCED_CHERRY_LEAVES.getDefaultState();
             }
             case "snowy" -> {
                 // Arctic willow: Short, bushy
                 trunkHeight = 3 + random.nextInt(2); // 3-4 blocks
                 canopyRadius = 1;
-                foliageState = Blocks.SPRUCE_LEAVES.getDefaultState();
+                foliageState = ModBlocks.ARCTIC_WILLOW_LEAVES.getDefaultState();
             }
             default -> {
                 // Default tree
                 trunkHeight = 4 + random.nextInt(2);
                 canopyRadius = 1;
-                foliageState = Blocks.OAK_LEAVES.getDefaultState();
+                foliageState = ModBlocks.FIG_LEAVES.getDefaultState();
             }
         }
 
         // Place trunk blocks
-        BlockState trunkState = treeBlock.getDefaultState();
+        BlockState trunkState = treeBlock.getDefaultState()
+            .with(PillarBlock.AXIS, Direction.Axis.Y)
+            .with(SpecialTreeBlock.FRUIT_STATE, 0);
+
         for (int y = 0; y < trunkHeight; y++) {
             BlockPos trunkPos = basePos.up(y);
-
-            // First block gets fruit state property
-            if (y == 0) {
-                trunkState = trunkState.with(SpecialTreeBlock.FRUIT_STATE, 0);
-            }
 
             if (!world.setBlockState(trunkPos, trunkState, 3)) {
                 return false; // Failed to place trunk
@@ -202,7 +204,19 @@ public class BiomePairFeature extends Feature<BiomePairConfig> {
                             // Only place if air or replaceable
                             if (world.getBlockState(leafPos).isAir() ||
                                 world.getBlockState(leafPos).isReplaceable()) {
-                                world.setBlockState(leafPos, foliageState, 3);
+
+                                // Calculate distance from this leaf to the tree trunk
+                                int leafDistance = calculateDistanceToTrunk(leafPos, basePos, trunkHeight);
+
+                                // Set the distance property (1-6 are valid, 7 means decay)
+                                BlockState leafStateWithDistance = foliageState
+                                    .with(LeavesBlock.DISTANCE, Math.min(leafDistance, 6))
+                                    .with(LeavesBlock.PERSISTENT, false);
+
+                                world.setBlockState(leafPos, leafStateWithDistance, 3);
+
+                                // Schedule a block update to ensure decay system registers it properly
+                                world.scheduleBlockTick(leafPos, leafStateWithDistance.getBlock(), 1);
                             }
                         }
                     }
@@ -285,5 +299,24 @@ public class BiomePairFeature extends Feature<BiomePairConfig> {
             case "tropical", "savanna" -> true; // Fig wasps and mason wasps are defensive
             default -> false;
         };
+    }
+
+    /**
+     * Calculate the Manhattan distance from a leaf position to the nearest trunk block.
+     * This is used to set the DISTANCE property on leaves so they don't decay.
+     */
+    private int calculateDistanceToTrunk(BlockPos leafPos, BlockPos basePos, int trunkHeight) {
+        int minDistance = Integer.MAX_VALUE;
+
+        // Check distance to each trunk block
+        for (int y = 0; y < trunkHeight; y++) {
+            BlockPos trunkPos = basePos.up(y);
+            int distance = Math.abs(leafPos.getX() - trunkPos.getX()) +
+                          Math.abs(leafPos.getY() - trunkPos.getY()) +
+                          Math.abs(leafPos.getZ() - trunkPos.getZ());
+            minDistance = Math.min(minDistance, distance);
+        }
+
+        return minDistance;
     }
 }

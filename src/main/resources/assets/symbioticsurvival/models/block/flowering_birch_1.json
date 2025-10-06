@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/cube_column",
   "textures": {
-    "all": "symbioticsurvival:block/flowering_birch_1"
+    "end": "symbioticsurvival:block/flowering_birch_1_top",
+    "side": "symbioticsurvival:block/flowering_birch_1"
   }
 }

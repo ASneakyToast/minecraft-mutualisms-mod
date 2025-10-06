@@ -1,13 +1,40 @@
 {
   "variants": {
-    "fruit_state=0": {
+    "axis=y,fruit_state=0": {
       "model": "symbioticsurvival:block/fig_tree_0"
     },
-    "fruit_state=1": {
+    "axis=y,fruit_state=1": {
       "model": "symbioticsurvival:block/fig_tree_1"
     },
-    "fruit_state=2": {
+    "axis=y,fruit_state=2": {
       "model": "symbioticsurvival:block/fig_tree_2"
+    },
+    "axis=x,fruit_state=0": {
+      "model": "symbioticsurvival:block/fig_tree_0",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,fruit_state=1": {
+      "model": "symbioticsurvival:block/fig_tree_1",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,fruit_state=2": {
+      "model": "symbioticsurvival:block/fig_tree_2",
+      "x": 90,
+      "y": 90
+    },
+    "axis=z,fruit_state=0": {
+      "model": "symbioticsurvival:block/fig_tree_0",
+      "x": 90
+    },
+    "axis=z,fruit_state=1": {
+      "model": "symbioticsurvival:block/fig_tree_1",
+      "x": 90
+    },
+    "axis=z,fruit_state=2": {
+      "model": "symbioticsurvival:block/fig_tree_2",
+      "x": 90
     }
   }
 }
