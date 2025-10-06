@@ -169,10 +169,10 @@ public class PollinatorNestBlockEntity extends BlockEntity {
         return 1200 + (world != null ? world.random.nextInt(2400) : 1200);
     }
 
-    // TODO: NBT Serialization (API changed in 1.21.9, needs research)
-    // Block entity data will be reset on world reload until this is implemented
-    /*
+    @Override
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        super.writeNbt(nbt, registryLookup);
+
         if (linkedTree != null) {
             nbt.putLong("LinkedTree", linkedTree.asLong());
         }
@@ -190,7 +190,10 @@ public class PollinatorNestBlockEntity extends BlockEntity {
         nbt.put("ActivePollinators", pollinatorsList);
     }
 
+    @Override
     protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        super.readNbt(nbt, registryLookup);
+
         if (nbt.contains("LinkedTree")) {
             this.linkedTree = BlockPos.fromLong(nbt.getLong("LinkedTree"));
         }
@@ -214,5 +217,4 @@ public class PollinatorNestBlockEntity extends BlockEntity {
             }
         }
     }
-    */
 }

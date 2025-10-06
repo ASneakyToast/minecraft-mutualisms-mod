@@ -123,9 +123,6 @@ public abstract class BasePollinatorEntity extends AnimalEntity {
         return isDefensive;
     }
 
-    // TODO: Entity NBT serialization methods not yet available in 1.21.9 Yarn mappings
-    // Will be implemented when API is clarified
-    /*
     @Override
     public void writeCustomDataToNbt(net.minecraft.nbt.NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
@@ -158,7 +155,6 @@ public abstract class BasePollinatorEntity extends AnimalEntity {
         this.pollinationCooldown = nbt.getInt("PollinationCooldown");
         this.nestDestroyed = nbt.getBoolean("NestDestroyed");
     }
-    */
 
     @Nullable
     @Override

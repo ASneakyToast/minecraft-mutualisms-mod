@@ -108,10 +108,10 @@ public class SpecialTreeBlockEntity extends BlockEntity {
         return canBePollinated;
     }
 
-    // TODO: NBT Serialization (API changed in 1.21.9, needs research)
-    // Block entity data will be reset on world reload until this is implemented
-    /*
+    @Override
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        super.writeNbt(nbt, registryLookup);
+
         if (linkedNest != null) {
             nbt.putLong("LinkedNest", linkedNest.asLong());
         }
@@ -120,7 +120,10 @@ public class SpecialTreeBlockEntity extends BlockEntity {
         nbt.putBoolean("CanBePollinated", canBePollinated);
     }
 
+    @Override
     protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        super.readNbt(nbt, registryLookup);
+
         if (nbt.contains("LinkedNest")) {
             this.linkedNest = BlockPos.fromLong(nbt.getLong("LinkedNest"));
         }
@@ -128,5 +131,4 @@ public class SpecialTreeBlockEntity extends BlockEntity {
         this.biomeType = nbt.getString("BiomeType");
         this.canBePollinated = nbt.getBoolean("CanBePollinated");
     }
-    */
 }
