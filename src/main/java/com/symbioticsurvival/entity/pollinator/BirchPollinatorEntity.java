@@ -17,8 +17,6 @@ public class BirchPollinatorEntity extends BasePollinatorEntity {
     @Override
     protected void initGoals() {
         super.initGoals();
-        // TODO: Add pollination-specific goals
-        // this.goalSelector.add(3, new PollinateTreeGoal(this));
-        // this.goalSelector.add(4, new ReturnToNestGoal(this));
+        // Passive pollinator with standard pollination behavior from parent class
     }
 }

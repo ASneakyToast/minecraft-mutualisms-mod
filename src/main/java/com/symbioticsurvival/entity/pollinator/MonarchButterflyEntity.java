@@ -17,7 +17,6 @@ public class MonarchButterflyEntity extends BasePollinatorEntity {
     @Override
     protected void initGoals() {
         super.initGoals();
-        // Butterflies fly more than other pollinators
-        // TODO: Add flying behavior when implemented
+        // Butterfly with standard pollination behavior from parent class
     }
 }

@@ -17,7 +17,6 @@ public class YuccaMothEntity extends BasePollinatorEntity {
     @Override
     protected void initGoals() {
         super.initGoals();
-        // Passive entities have enhanced flee behavior
-        // TODO: Add pollination goals when fully implemented
+        // Passive pollinator with standard pollination behavior from parent class
     }
 }
