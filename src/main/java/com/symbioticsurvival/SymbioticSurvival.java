@@ -30,6 +30,7 @@ public class SymbioticSurvival implements ModInitializer {
         ModItemGroups.register();
         ModBlockEntities.register();
         ModEntities.register();
+        ModEntitySpawns.register();
         ModFeatures.register();
         com.symbioticsurvival.worldgen.ModWorldGen.initialize();
         // TODO: ModPackets.registerS2CPackets();
