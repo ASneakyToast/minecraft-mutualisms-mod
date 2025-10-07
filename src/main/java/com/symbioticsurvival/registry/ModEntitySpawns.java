@@ -115,7 +115,7 @@ public class ModEntitySpawns {
                 BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE, BiomeKeys.BAMBOO_JUNGLE),
                 SpawnGroup.AMBIENT,
                 ModEntities.FIG_WASP,
-                25,  // Higher weight for ambient spawns
+                10,  // Reduced from 25 for performance
                 1,
                 2
             );
@@ -127,7 +127,7 @@ public class ModEntitySpawns {
                 BiomeSelectors.includeByKey(BiomeKeys.DESERT),
                 SpawnGroup.AMBIENT,
                 ModEntities.YUCCA_MOTH,
-                20,
+                8,  // Reduced from 20 for performance
                 1,
                 2
             );
@@ -139,9 +139,9 @@ public class ModEntitySpawns {
                 BiomeSelectors.includeByKey(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS),
                 SpawnGroup.AMBIENT,
                 ModEntities.MONARCH_BUTTERFLY,
-                30,  // Butterflies should be common in plains
-                2,
-                4
+                12,  // Reduced from 30 for performance
+                1,
+                2
             );
         }
 
@@ -151,9 +151,9 @@ public class ModEntitySpawns {
                 BiomeSelectors.includeByKey(BiomeKeys.SAVANNA, BiomeKeys.SAVANNA_PLATEAU, BiomeKeys.WINDSWEPT_SAVANNA),
                 SpawnGroup.AMBIENT,
                 ModEntities.MASON_WASP,
-                20,
+                8,  // Reduced from 20 for performance
                 1,
-                3
+                2
             );
         }
 
@@ -163,9 +163,9 @@ public class ModEntitySpawns {
                 BiomeSelectors.includeByKey(BiomeKeys.TAIGA, BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA),
                 SpawnGroup.AMBIENT,
                 ModEntities.SAWFLY,
-                25,
+                10,  // Reduced from 25 for performance
                 1,
-                3
+                2
             );
         }
 
@@ -174,7 +174,7 @@ public class ModEntitySpawns {
             BiomeSelectors.includeByKey(BiomeKeys.SWAMP, BiomeKeys.MANGROVE_SWAMP),
             SpawnGroup.CREATURE,
             ModEntities.MANGROVE_POLLINATOR,
-            15,
+            6,  // Reduced from 15 for performance
             1,
             2
         );
@@ -184,9 +184,9 @@ public class ModEntitySpawns {
             BiomeSelectors.includeByKey(BiomeKeys.DARK_FOREST),
             SpawnGroup.AMBIENT,
             ModEntities.FUNGUS_GNAT,
-            35,  // Should be plentiful in dark forests
-            2,
-            4
+            14,  // Reduced from 35 for performance
+            1,
+            2
         );
 
         // Birch Pollinator - Birch Forest biomes (small pollinator = AMBIENT)
@@ -194,9 +194,9 @@ public class ModEntitySpawns {
             BiomeSelectors.includeByKey(BiomeKeys.BIRCH_FOREST, BiomeKeys.OLD_GROWTH_BIRCH_FOREST),
             SpawnGroup.AMBIENT,
             ModEntities.BIRCH_POLLINATOR,
-            25,
+            10,  // Reduced from 25 for performance
             1,
-            3
+            2
         );
 
         // Orchard Bee - Cherry Grove biomes (bee = CREATURE, like vanilla bees)
@@ -204,9 +204,9 @@ public class ModEntitySpawns {
             BiomeSelectors.includeByKey(BiomeKeys.CHERRY_GROVE),
             SpawnGroup.CREATURE,
             ModEntities.ORCHARD_BEE,
-            20,  // Should be common in cherry groves
-            2,
-            4
+            8,  // Reduced from 20 for performance
+            1,
+            2
         );
 
         // Bumblebee - Snowy Taiga biomes (bee = CREATURE)
@@ -214,7 +214,7 @@ public class ModEntitySpawns {
             BiomeSelectors.includeByKey(BiomeKeys.SNOWY_TAIGA),
             SpawnGroup.CREATURE,
             ModEntities.BUMBLEBEE,
-            12,
+            5,  // Reduced from 12 for performance
             1,
             2
         );

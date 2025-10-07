@@ -2,21 +2,25 @@ package com.symbioticsurvival.entity.ai;
 
 import com.symbioticsurvival.block.PollinatorNestBlock;
 import com.symbioticsurvival.entity.HoneyguideEntity;
+import com.symbioticsurvival.registry.ModPointOfInterest;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.poi.PointOfInterestStorage;
 
 import java.util.EnumSet;
 
 /**
  * AI goal for Honeyguide to search for nearby pollinator nests.
+ * Uses the POI (Point of Interest) system for efficient searching.
  */
 public class FindNestGoal extends Goal {
 
     private final HoneyguideEntity honeyguide;
     private BlockPos foundNest;
     private int searchCooldown;
-    private static final int SEARCH_RADIUS = 32;
+    private static final int SEARCH_RADIUS = 48; // Matches POI registration distance
     private static final int SEARCH_INTERVAL = 200; // 10 seconds
 
     public FindNestGoal(HoneyguideEntity honeyguide) {
@@ -52,22 +56,23 @@ public class FindNestGoal extends Goal {
 
     private BlockPos findNearestNest() {
         World world = honeyguide.getEntityWorld();
-        BlockPos honeyguidePos = honeyguide.getBlockPos();
 
-        // Search in a cube around the honeyguide
-        for (int x = -SEARCH_RADIUS; x <= SEARCH_RADIUS; x++) {
-            for (int y = -SEARCH_RADIUS / 2; y <= SEARCH_RADIUS / 2; y++) {
-                for (int z = -SEARCH_RADIUS; z <= SEARCH_RADIUS; z++) {
-                    BlockPos checkPos = honeyguidePos.add(x, y, z);
-
-                    if (world.getBlockState(checkPos).getBlock() instanceof PollinatorNestBlock) {
-                        return checkPos;
-                    }
-                }
-            }
+        // POI system only works on server side
+        if (!(world instanceof ServerWorld serverWorld)) {
+            return null;
         }
 
-        return null;
+        BlockPos honeyguidePos = honeyguide.getBlockPos();
+        PointOfInterestStorage poiStorage = serverWorld.getPointOfInterestStorage();
+
+        // Use POI system to efficiently find nearest pollinator nest
+        // This replaces the O(n³) triple nested loop with an O(log n) spatial query
+        return poiStorage.getNearestPosition(
+            poi -> poi.matchesKey(ModPointOfInterest.POLLINATOR_NEST_KEY),
+            honeyguidePos,
+            SEARCH_RADIUS,
+            PointOfInterestStorage.OccupationStatus.ANY
+        ).orElse(null);
     }
 
     public BlockPos getFoundNest() {

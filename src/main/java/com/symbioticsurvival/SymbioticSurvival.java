@@ -26,6 +26,7 @@ public class SymbioticSurvival implements ModInitializer {
         // Register everything in order
         // TODO: ModSounds.register();
         ModBlocks.register();
+        ModPointOfInterest.register(); // POI must be registered after blocks
         ModItems.register();
         ModItemGroups.register();
         ModBlockEntities.register();

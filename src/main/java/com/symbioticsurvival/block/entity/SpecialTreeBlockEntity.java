@@ -29,13 +29,17 @@ public class SpecialTreeBlockEntity extends BlockEntity {
     }
 
     /**
-     * Ticker method called every tick
+     * Ticker method
+     * Optimized to run every 20 ticks (1 second) instead of every tick for better performance
      */
     public static void tick(World world, BlockPos pos, BlockState state, SpecialTreeBlockEntity blockEntity) {
         if (world.isClient()) return;
 
-        // Verify nest still exists periodically
-        if (world.getTime() % 100 == 0) { // Every 5 seconds
+        // Only tick every 20 game ticks (1 second) to reduce overhead
+        if (world.getTime() % 20 != 0) return;
+
+        // Verify nest still exists periodically (every 5 seconds = 100 ticks)
+        if (world.getTime() % 100 == 0) {
             blockEntity.validateNestLink();
         }
     }

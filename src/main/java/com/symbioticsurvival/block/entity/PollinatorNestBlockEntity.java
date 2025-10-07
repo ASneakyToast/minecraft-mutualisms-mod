@@ -40,23 +40,27 @@ public class PollinatorNestBlockEntity extends BlockEntity {
 
     /**
      * Ticker method
+     * Optimized to run every 20 ticks (1 second) instead of every tick for better performance
      */
     public static void tick(World world, BlockPos pos, BlockState state,
                            PollinatorNestBlockEntity blockEntity) {
         if (world.isClient()) return;
 
-        // Countdown to next pollination
+        // Only tick every 20 game ticks (1 second) to reduce overhead
+        if (world.getTime() % 20 != 0) return;
+
+        // Countdown to next pollination (scaled by 20 since we tick every 20 ticks)
         if (blockEntity.pollinationCooldown > 0) {
-            blockEntity.pollinationCooldown--;
+            blockEntity.pollinationCooldown -= 20;
         }
 
         // Spawn pollinator if it's time
-        if (blockEntity.pollinationCooldown == 0 && blockEntity.linkedTree != null) {
+        if (blockEntity.pollinationCooldown <= 0 && blockEntity.linkedTree != null) {
             blockEntity.spawnPollinator();
             blockEntity.pollinationCooldown = blockEntity.getRandomPollinationInterval();
         }
 
-        // Cleanup dead pollinators from list
+        // Cleanup dead pollinators from list (only needed once per second)
         blockEntity.cleanupPollinators();
     }
 
