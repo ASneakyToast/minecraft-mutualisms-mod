@@ -1,24 +1,27 @@
 package com.symbioticsurvival.data;
 
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.registry.RegistryWrapper;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.symbioticsurvival.SymbioticSurvival;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Uuids;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.PersistentState;
+import net.minecraft.world.PersistentStateType;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
  * Stores flower pollination data in world save data using PersistentState.
  * This is the CORRECT approach - vanilla flowers cannot have BlockEntities.
+ * Now properly integrated with Minecraft's PersistentState system for disk persistence.
  */
-public class FlowerPollinationData {
+public class FlowerPollinationData extends PersistentState {
 
-    private static final String DATA_NAME = "symbioticsurvival_flower_pollination";
-    private final Map<BlockPos, PollinationInfo> flowers = new HashMap<>();
+    private final Map<BlockPos, PollinationInfo> flowers;
 
     public static class PollinationInfo {
         public long pollinationTime;
@@ -32,9 +35,44 @@ public class FlowerPollinationData {
         public PollinationInfo() {
             this(0, null);
         }
+
+        // Codec for PollinationInfo serialization
+        // Uses Minecraft's built-in UUID codec which properly handles null values
+        public static final Codec<PollinationInfo> CODEC = RecordCodecBuilder.create(instance ->
+            instance.group(
+                Codec.LONG.fieldOf("pollinationTime").forGetter(info -> info.pollinationTime),
+                Uuids.CODEC.optionalFieldOf("pollinatorUUID")
+                    .forGetter(info -> Optional.ofNullable(info.pollinatorUUID))
+            ).apply(instance, (time, uuidOpt) -> new PollinationInfo(time, uuidOpt.orElse(null)))
+        );
     }
 
+    // Codec for the entire FlowerPollinationData
+    private static final Codec<FlowerPollinationData> CODEC = RecordCodecBuilder.create(instance ->
+        instance.group(
+            Codec.unboundedMap(BlockPos.CODEC, PollinationInfo.CODEC)
+                .fieldOf("flowers")
+                .forGetter(data -> data.flowers)
+        ).apply(instance, FlowerPollinationData::new)
+    );
+
+    // PersistentStateType for registration
+    private static final PersistentStateType<FlowerPollinationData> TYPE =
+        new PersistentStateType<>(
+            SymbioticSurvival.MOD_ID,        // Mod ID identifier
+            FlowerPollinationData::new,      // Constructor for new instances
+            CODEC,                            // Codec for deserialization
+            null                              // DataFixTypes (null for custom data)
+        );
+
+    // Constructor for new instances
     public FlowerPollinationData() {
+        this.flowers = new HashMap<>();
+    }
+
+    // Constructor for loading from codec
+    private FlowerPollinationData(Map<BlockPos, PollinationInfo> flowers) {
+        this.flowers = new HashMap<>(flowers);
     }
 
     /**
@@ -42,7 +80,7 @@ public class FlowerPollinationData {
      */
     public void markPollinated(BlockPos pos, long time, UUID pollinator) {
         flowers.put(pos.toImmutable(), new PollinationInfo(time, pollinator));
-        // TODO: markDirty() when integrated with PersistentState
+        markDirty();
     }
 
     /**
@@ -61,7 +99,7 @@ public class FlowerPollinationData {
      */
     public void removeFlower(BlockPos pos) {
         flowers.remove(pos);
-        // TODO: markDirty() when integrated with PersistentState
+        markDirty();
     }
 
     /**
@@ -75,21 +113,19 @@ public class FlowerPollinationData {
      * Cleanup old pollination data (run periodically)
      */
     public void cleanup(long currentTime) {
-        flowers.entrySet().removeIf(entry ->
+        boolean removed = flowers.entrySet().removeIf(entry ->
             (currentTime - entry.getValue().pollinationTime) > 48000 // 2 days
         );
-        // TODO: markDirty() when integrated with PersistentState
+        if (removed) {
+            markDirty();
+        }
     }
 
-    // TODO: Integrate with PersistentState API for 1.21.9
-    // Temporary storage per world
-    private static final Map<ServerWorld, FlowerPollinationData> WORLD_DATA = new HashMap<>();
-
     /**
-     * Get or create the FlowerPollinationData for a world
-     * TODO: Integrate with PersistentState API for proper world saving
+     * Get or create the FlowerPollinationData for a world using PersistentState API.
+     * This properly integrates with Minecraft's world save/load system.
      */
     public static FlowerPollinationData get(ServerWorld world) {
-        return WORLD_DATA.computeIfAbsent(world, w -> new FlowerPollinationData());
+        return world.getPersistentStateManager().getOrCreate(TYPE);
     }
 }

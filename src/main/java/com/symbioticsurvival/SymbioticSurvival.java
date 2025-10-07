@@ -28,6 +28,7 @@ public class SymbioticSurvival implements ModInitializer {
         ModBlocks.register();
         ModPointOfInterest.register(); // POI must be registered after blocks
         ModItems.register();
+        ModVanillaIntegration.register(); // Vanilla integrations (flammability, composting, fuel)
         ModItemGroups.register();
         ModBlockEntities.register();
         ModEntities.register();

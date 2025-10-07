@@ -1,7 +1,10 @@
 package com.symbioticsurvival.block;
 
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.symbioticsurvival.block.entity.SpecialTreeBlockEntity;
 import com.symbioticsurvival.registry.ModBlockEntities;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockRenderType;
@@ -27,6 +30,12 @@ import org.jetbrains.annotations.Nullable;
  */
 public class SpecialTreeBlock extends PillarBlock implements BlockEntityProvider {
 
+    // Codec that only serializes Settings (biomeType is instance-specific, not serialized)
+    public static final MapCodec<SpecialTreeBlock> CODEC = RecordCodecBuilder.mapCodec(instance ->
+        instance.group(AbstractBlock.createSettingsCodec())
+            .apply(instance, settings -> new SpecialTreeBlock(settings, "unknown"))
+    );
+
     // Fruit states: 0=immature, 1=pollinated, 2=mature
     public static final IntProperty FRUIT_STATE = IntProperty.of("fruit_state", 0, 2);
 
@@ -39,6 +48,11 @@ public class SpecialTreeBlock extends PillarBlock implements BlockEntityProvider
         setDefaultState(getDefaultState()
             .with(AXIS, net.minecraft.util.math.Direction.Axis.Y)
             .with(FRUIT_STATE, 0));
+    }
+
+    @Override
+    public MapCodec<? extends PillarBlock> getCodec() {
+        return CODEC;
     }
 
     @Override

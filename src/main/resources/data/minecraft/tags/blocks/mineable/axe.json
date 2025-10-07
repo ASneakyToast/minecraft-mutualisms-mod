@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    "symbioticsurvival:fig_tree",
+    "symbioticsurvival:yucca_plant",
+    "symbioticsurvival:acacia_variant",
+    "symbioticsurvival:conifer_variant",
+    "symbioticsurvival:milkweed",
+    "symbioticsurvival:mangrove_variant",
+    "symbioticsurvival:glowing_mushroom",
+    "symbioticsurvival:flowering_birch",
+    "symbioticsurvival:enhanced_cherry",
+    "symbioticsurvival:arctic_willow",
+    "symbioticsurvival:fig_wasp_nest",
+    "symbioticsurvival:yucca_cocoon",
+    "symbioticsurvival:mason_wasp_nest",
+    "symbioticsurvival:sawfly_cocoon",
+    "symbioticsurvival:monarch_chrysalis",
+    "symbioticsurvival:mangrove_bee_hive",
+    "symbioticsurvival:fungus_gnat_nest",
+    "symbioticsurvival:birch_bee_hive",
+    "symbioticsurvival:orchard_bee_nest",
+    "symbioticsurvival:bumblebee_nest"
+  ]
+}

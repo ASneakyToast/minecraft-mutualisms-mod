@@ -17,6 +17,8 @@ import net.minecraft.world.WorldAccess;
  */
 public class SpecialLeavesBlock extends LeavesBlock {
 
+    public static final MapCodec<SpecialLeavesBlock> CODEC = createCodec(SpecialLeavesBlock::new);
+
     public SpecialLeavesBlock(Settings settings) {
         // LeavesBlock constructor requires a float for particle spawn chance (0.0-1.0)
         // 0.025 is the same value vanilla leaves use
@@ -29,10 +31,9 @@ public class SpecialLeavesBlock extends LeavesBlock {
             .with(PERSISTENT, false));
     }
 
-    // TODO: Implement Codec in future Minecraft version
     @Override
     public MapCodec<? extends LeavesBlock> getCodec() {
-        throw new UnsupportedOperationException("Codec not yet implemented");
+        return CODEC;
     }
 
     @Override

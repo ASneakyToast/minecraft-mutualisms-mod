@@ -1,8 +1,10 @@
 package com.symbioticsurvival.block;
 
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.symbioticsurvival.block.entity.PollinatorNestBlockEntity;
 import com.symbioticsurvival.registry.ModBlockEntities;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
@@ -19,10 +21,14 @@ import org.jetbrains.annotations.Nullable;
  */
 public class PollinatorNestBlock extends BlockWithEntity {
 
-    // TODO: Implement Codec in 1.21.9
+    public static final MapCodec<PollinatorNestBlock> CODEC = RecordCodecBuilder.mapCodec(instance ->
+        instance.group(AbstractBlock.createSettingsCodec())
+            .apply(instance, settings -> new PollinatorNestBlock(settings, "unknown", false))
+    );
+
     @Override
     protected MapCodec<? extends BlockWithEntity> getCodec() {
-        throw new UnsupportedOperationException("Codec not yet implemented");
+        return CODEC;
     }
 
     private final String biomeType;

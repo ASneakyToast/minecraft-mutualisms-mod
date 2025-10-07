@@ -4,9 +4,13 @@ import com.symbioticsurvival.entity.ai.DefendNestGoal;
 import com.symbioticsurvival.entity.ai.PollinateTreeGoal;
 import com.symbioticsurvival.entity.ai.ReturnToNestGoal;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ai.control.FlightMoveControl;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.pathing.BirdNavigation;
+import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -35,6 +39,14 @@ public abstract class BasePollinatorEntity extends AnimalEntity {
         this.biomeType = biomeType;
         this.isDefensive = isDefensive;
         this.pollinationCooldown = 100;
+        // Use flight movement controller for better flying behavior
+        this.moveControl = new FlightMoveControl(this, 20, true);
+    }
+
+    @Override
+    protected EntityNavigation createNavigation(World world) {
+        // Use BirdNavigation for 3D flying pathfinding instead of ground-based navigation
+        return new BirdNavigation(this, world);
     }
 
     @Override
