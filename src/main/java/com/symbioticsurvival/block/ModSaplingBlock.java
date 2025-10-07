@@ -23,9 +23,9 @@ public class ModSaplingBlock extends SaplingBlock {
     public static SaplingGenerator createGenerator(String name, RegistryKey<ConfiguredFeature<?, ?>> treeFeature) {
         return new SaplingGenerator(
             name,
-            Optional.of(treeFeature),
-            Optional.empty(),
-            Optional.empty()
+            Optional.empty(),          // megaVariant - for 2x2 sapling arrangements
+            Optional.of(treeFeature),  // regularVariant - for single saplings
+            Optional.empty()           // beesVariant - variant with bees
         );
     }
 }
