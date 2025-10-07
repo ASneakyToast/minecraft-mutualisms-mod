@@ -197,6 +197,37 @@ public class ModItems {
     public static final Item BUMBLEBEE_NEST = registerItem("bumblebee_nest", settings ->
         new BlockItem(ModBlocks.BUMBLEBEE_NEST, settings));
 
+    // Block Items - Leaves
+    public static final Item FIG_LEAVES = registerItem("fig_leaves", settings ->
+        new BlockItem(ModBlocks.FIG_LEAVES, settings));
+
+    public static final Item YUCCA_LEAVES = registerItem("yucca_leaves", settings ->
+        new BlockItem(ModBlocks.YUCCA_LEAVES, settings));
+
+    public static final Item ACACIA_VARIANT_LEAVES = registerItem("acacia_variant_leaves", settings ->
+        new BlockItem(ModBlocks.ACACIA_VARIANT_LEAVES, settings));
+
+    public static final Item CONIFER_VARIANT_LEAVES = registerItem("conifer_variant_leaves", settings ->
+        new BlockItem(ModBlocks.CONIFER_VARIANT_LEAVES, settings));
+
+    public static final Item MILKWEED_LEAVES = registerItem("milkweed_leaves", settings ->
+        new BlockItem(ModBlocks.MILKWEED_LEAVES, settings));
+
+    public static final Item MANGROVE_VARIANT_LEAVES = registerItem("mangrove_variant_leaves", settings ->
+        new BlockItem(ModBlocks.MANGROVE_VARIANT_LEAVES, settings));
+
+    public static final Item GLOWING_MUSHROOM_LEAVES = registerItem("glowing_mushroom_leaves", settings ->
+        new BlockItem(ModBlocks.GLOWING_MUSHROOM_LEAVES, settings));
+
+    public static final Item FLOWERING_BIRCH_LEAVES = registerItem("flowering_birch_leaves", settings ->
+        new BlockItem(ModBlocks.FLOWERING_BIRCH_LEAVES, settings));
+
+    public static final Item ENHANCED_CHERRY_LEAVES = registerItem("enhanced_cherry_leaves", settings ->
+        new BlockItem(ModBlocks.ENHANCED_CHERRY_LEAVES, settings));
+
+    public static final Item ARCTIC_WILLOW_LEAVES = registerItem("arctic_willow_leaves", settings ->
+        new BlockItem(ModBlocks.ARCTIC_WILLOW_LEAVES, settings));
+
     private static <T extends Item> T registerItem(String name, Function<Item.Settings, T> factory) {
         Identifier id = Identifier.of(SymbioticSurvival.MOD_ID, name);
         RegistryKey<Item> key = RegistryKey.of(RegistryKeys.ITEM, id);

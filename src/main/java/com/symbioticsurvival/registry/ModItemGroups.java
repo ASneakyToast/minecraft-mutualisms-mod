@@ -34,6 +34,18 @@ public class ModItemGroups {
             entries.add(ModItems.ENHANCED_CHERRY);
             entries.add(ModItems.ARCTIC_WILLOW);
 
+            // Leaves
+            entries.add(ModItems.FIG_LEAVES);
+            entries.add(ModItems.YUCCA_LEAVES);
+            entries.add(ModItems.ACACIA_VARIANT_LEAVES);
+            entries.add(ModItems.CONIFER_VARIANT_LEAVES);
+            entries.add(ModItems.MILKWEED_LEAVES);
+            entries.add(ModItems.MANGROVE_VARIANT_LEAVES);
+            entries.add(ModItems.GLOWING_MUSHROOM_LEAVES);
+            entries.add(ModItems.FLOWERING_BIRCH_LEAVES);
+            entries.add(ModItems.ENHANCED_CHERRY_LEAVES);
+            entries.add(ModItems.ARCTIC_WILLOW_LEAVES);
+
             // Pollinator Nests
             entries.add(ModItems.FIG_WASP_NEST);
             entries.add(ModItems.YUCCA_COCOON);

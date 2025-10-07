@@ -2,10 +2,10 @@ package com.symbioticsurvival.registry;
 
 import com.symbioticsurvival.SymbioticSurvival;
 import com.symbioticsurvival.block.PollinatorNestBlock;
+import com.symbioticsurvival.block.SpecialLeavesBlock;
 import com.symbioticsurvival.block.SpecialTreeBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
-import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.MapColor;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -148,7 +148,7 @@ public class ModBlocks {
 
     // Special Leaf Blocks
     public static final Block FIG_LEAVES = registerBlock("fig_leaves",
-        new LeavesBlock(0.025f, settingsWithKey("fig_leaves")
+        new SpecialLeavesBlock(0.025f, settingsWithKey("fig_leaves")
             .mapColor(MapColor.DARK_GREEN)
             .sounds(BlockSoundGroup.AZALEA_LEAVES)
             .strength(0.2f)
@@ -156,10 +156,10 @@ public class ModBlocks {
             .nonOpaque()
             .allowsSpawning((state, world, pos, type) -> false)
             .suffocates((state, world, pos) -> false)
-            .blockVision((state, world, pos) -> false)));
+            .blockVision((state, world, pos) -> false), "tropical"));
 
     public static final Block YUCCA_LEAVES = registerBlock("yucca_leaves",
-        new LeavesBlock(0.025f, settingsWithKey("yucca_leaves")
+        new SpecialLeavesBlock(0.025f, settingsWithKey("yucca_leaves")
             .mapColor(MapColor.GREEN)
             .sounds(BlockSoundGroup.AZALEA_LEAVES)
             .strength(0.2f)
@@ -167,10 +167,10 @@ public class ModBlocks {
             .nonOpaque()
             .allowsSpawning((state, world, pos, type) -> false)
             .suffocates((state, world, pos) -> false)
-            .blockVision((state, world, pos) -> false)));
+            .blockVision((state, world, pos) -> false), "desert"));
 
     public static final Block ACACIA_VARIANT_LEAVES = registerBlock("acacia_variant_leaves",
-        new LeavesBlock(0.025f, settingsWithKey("acacia_variant_leaves")
+        new SpecialLeavesBlock(0.025f, settingsWithKey("acacia_variant_leaves")
             .mapColor(MapColor.ORANGE)
             .sounds(BlockSoundGroup.AZALEA_LEAVES)
             .strength(0.2f)
@@ -178,10 +178,10 @@ public class ModBlocks {
             .nonOpaque()
             .allowsSpawning((state, world, pos, type) -> false)
             .suffocates((state, world, pos) -> false)
-            .blockVision((state, world, pos) -> false)));
+            .blockVision((state, world, pos) -> false), "savanna"));
 
     public static final Block CONIFER_VARIANT_LEAVES = registerBlock("conifer_variant_leaves",
-        new LeavesBlock(0.025f, settingsWithKey("conifer_variant_leaves")
+        new SpecialLeavesBlock(0.025f, settingsWithKey("conifer_variant_leaves")
             .mapColor(MapColor.SPRUCE_BROWN)
             .sounds(BlockSoundGroup.AZALEA_LEAVES)
             .strength(0.2f)
@@ -189,10 +189,10 @@ public class ModBlocks {
             .nonOpaque()
             .allowsSpawning((state, world, pos, type) -> false)
             .suffocates((state, world, pos) -> false)
-            .blockVision((state, world, pos) -> false)));
+            .blockVision((state, world, pos) -> false), "taiga"));
 
     public static final Block MILKWEED_LEAVES = registerBlock("milkweed_leaves",
-        new LeavesBlock(0.025f, settingsWithKey("milkweed_leaves")
+        new SpecialLeavesBlock(0.025f, settingsWithKey("milkweed_leaves")
             .mapColor(MapColor.LIME)
             .sounds(BlockSoundGroup.AZALEA_LEAVES)
             .strength(0.2f)
@@ -200,10 +200,10 @@ public class ModBlocks {
             .nonOpaque()
             .allowsSpawning((state, world, pos, type) -> false)
             .suffocates((state, world, pos) -> false)
-            .blockVision((state, world, pos) -> false)));
+            .blockVision((state, world, pos) -> false), "plains"));
 
     public static final Block MANGROVE_VARIANT_LEAVES = registerBlock("mangrove_variant_leaves",
-        new LeavesBlock(0.025f, settingsWithKey("mangrove_variant_leaves")
+        new SpecialLeavesBlock(0.025f, settingsWithKey("mangrove_variant_leaves")
             .mapColor(MapColor.DARK_GREEN)
             .sounds(BlockSoundGroup.AZALEA_LEAVES)
             .strength(0.2f)
@@ -211,10 +211,10 @@ public class ModBlocks {
             .nonOpaque()
             .allowsSpawning((state, world, pos, type) -> false)
             .suffocates((state, world, pos) -> false)
-            .blockVision((state, world, pos) -> false)));
+            .blockVision((state, world, pos) -> false), "swamp"));
 
     public static final Block GLOWING_MUSHROOM_LEAVES = registerBlock("glowing_mushroom_leaves",
-        new LeavesBlock(0.025f, settingsWithKey("glowing_mushroom_leaves")
+        new SpecialLeavesBlock(0.025f, settingsWithKey("glowing_mushroom_leaves")
             .mapColor(MapColor.PURPLE)
             .sounds(BlockSoundGroup.FUNGUS)
             .strength(0.2f)
@@ -223,10 +223,10 @@ public class ModBlocks {
             .nonOpaque()
             .allowsSpawning((state, world, pos, type) -> false)
             .suffocates((state, world, pos) -> false)
-            .blockVision((state, world, pos) -> false)));
+            .blockVision((state, world, pos) -> false), "mushroom"));
 
     public static final Block FLOWERING_BIRCH_LEAVES = registerBlock("flowering_birch_leaves",
-        new LeavesBlock(0.025f, settingsWithKey("flowering_birch_leaves")
+        new SpecialLeavesBlock(0.025f, settingsWithKey("flowering_birch_leaves")
             .mapColor(MapColor.WHITE)
             .sounds(BlockSoundGroup.AZALEA_LEAVES)
             .strength(0.2f)
@@ -234,10 +234,10 @@ public class ModBlocks {
             .nonOpaque()
             .allowsSpawning((state, world, pos, type) -> false)
             .suffocates((state, world, pos) -> false)
-            .blockVision((state, world, pos) -> false)));
+            .blockVision((state, world, pos) -> false), "birch_forest"));
 
     public static final Block ENHANCED_CHERRY_LEAVES = registerBlock("enhanced_cherry_leaves",
-        new LeavesBlock(0.025f, settingsWithKey("enhanced_cherry_leaves")
+        new SpecialLeavesBlock(0.025f, settingsWithKey("enhanced_cherry_leaves")
             .mapColor(MapColor.PINK)
             .sounds(BlockSoundGroup.CHERRY_LEAVES)
             .strength(0.2f)
@@ -245,10 +245,10 @@ public class ModBlocks {
             .nonOpaque()
             .allowsSpawning((state, world, pos, type) -> false)
             .suffocates((state, world, pos) -> false)
-            .blockVision((state, world, pos) -> false)));
+            .blockVision((state, world, pos) -> false), "cherry_grove"));
 
     public static final Block ARCTIC_WILLOW_LEAVES = registerBlock("arctic_willow_leaves",
-        new LeavesBlock(0.025f, settingsWithKey("arctic_willow_leaves")
+        new SpecialLeavesBlock(0.025f, settingsWithKey("arctic_willow_leaves")
             .mapColor(MapColor.CYAN)
             .sounds(BlockSoundGroup.AZALEA_LEAVES)
             .strength(0.2f)
@@ -256,7 +256,7 @@ public class ModBlocks {
             .nonOpaque()
             .allowsSpawning((state, world, pos, type) -> false)
             .suffocates((state, world, pos) -> false)
-            .blockVision((state, world, pos) -> false)));
+            .blockVision((state, world, pos) -> false), "snowy"));
 
     private static RegistryKey<Block> keyOf(String name) {
         return RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(SymbioticSurvival.MOD_ID, name));
