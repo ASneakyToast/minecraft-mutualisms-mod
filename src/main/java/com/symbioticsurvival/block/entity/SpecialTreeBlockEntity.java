@@ -108,6 +108,9 @@ public class SpecialTreeBlockEntity extends BlockEntity {
         return canBePollinated;
     }
 
+    // TODO: NBT methods need updating for 1.21.9+ API (method names/signatures changed)
+    // The NbtCompound getter methods now return Optional<T> instead of primitive types
+    /*
     @Override
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         super.writeNbt(nbt, registryLookup);
@@ -131,4 +134,5 @@ public class SpecialTreeBlockEntity extends BlockEntity {
         this.biomeType = nbt.getString("BiomeType");
         this.canBePollinated = nbt.getBoolean("CanBePollinated");
     }
+    */
 }

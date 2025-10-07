@@ -64,17 +64,14 @@ public class PollinatorNestBlockEntity extends BlockEntity {
         // Don't spawn if too many active
         if (activePollinators.size() >= 2) return;
 
-        // TODO: Pollinator spawning logic when EntityType.create API is clarified for 1.21.9
-        // Currently the create() method signature has changed and needs research
-        /*
-        if (world == null) return;
+        if (world == null || world.isClient()) return;
 
         // Get entity type based on biome type
         EntityType<? extends BasePollinatorEntity> entityType = getEntityTypeForBiome(biomeType);
         if (entityType == null) return;
 
-        // Create entity
-        BasePollinatorEntity pollinator = entityType.create(world);
+        // Create entity with spawn reason
+        BasePollinatorEntity pollinator = entityType.create(world, net.minecraft.entity.SpawnReason.NATURAL);
         if (pollinator == null) return;
 
         // Position near nest (with random offset)
@@ -104,7 +101,6 @@ public class PollinatorNestBlockEntity extends BlockEntity {
                     pollinator.getType().getTranslationKey(), pollinator.getBlockPos(), pos);
             }
         }
-        */
     }
 
     private EntityType<? extends BasePollinatorEntity> getEntityTypeForBiome(String biomeType) {
@@ -169,6 +165,9 @@ public class PollinatorNestBlockEntity extends BlockEntity {
         return 1200 + (world != null ? world.random.nextInt(2400) : 1200);
     }
 
+    // TODO: NBT methods need updating for 1.21.9+ API (method names/signatures changed)
+    // The NbtCompound getter methods now return Optional<T> instead of primitive types
+    /*
     @Override
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         super.writeNbt(nbt, registryLookup);
@@ -217,4 +216,5 @@ public class PollinatorNestBlockEntity extends BlockEntity {
             }
         }
     }
+    */
 }

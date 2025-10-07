@@ -126,6 +126,9 @@ public class HoneyguideEntity extends AnimalEntity {
             .add(EntityAttributes.MOVEMENT_SPEED, 0.3);
     }
 
+    // TODO: NBT methods need updating for 1.21.9+ API (method names/signatures changed)
+    // The NbtCompound getter methods now return Optional<T> instead of primitive types
+    /*
     @Override
     public void writeCustomDataToNbt(net.minecraft.nbt.NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
@@ -162,4 +165,5 @@ public class HoneyguideEntity extends AnimalEntity {
         this.leadingTimeout = nbt.getInt("LeadingTimeout");
         this.isLeading = nbt.getBoolean("IsLeading");
     }
+    */
 }

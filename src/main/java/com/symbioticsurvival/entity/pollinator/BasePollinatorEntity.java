@@ -123,6 +123,9 @@ public abstract class BasePollinatorEntity extends AnimalEntity {
         return isDefensive;
     }
 
+    // TODO: NBT methods need updating for 1.21.9+ API (method names/signatures changed)
+    // The NbtCompound getter methods now return Optional<T> instead of primitive types
+    /*
     @Override
     public void writeCustomDataToNbt(net.minecraft.nbt.NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
@@ -155,6 +158,7 @@ public abstract class BasePollinatorEntity extends AnimalEntity {
         this.pollinationCooldown = nbt.getInt("PollinationCooldown");
         this.nestDestroyed = nbt.getBoolean("NestDestroyed");
     }
+    */
 
     @Nullable
     @Override
