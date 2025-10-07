@@ -126,44 +126,41 @@ public class HoneyguideEntity extends AnimalEntity {
             .add(EntityAttributes.MOVEMENT_SPEED, 0.3);
     }
 
-    // TODO: NBT methods need updating for 1.21.9+ API (method names/signatures changed)
-    // The NbtCompound getter methods now return Optional<T> instead of primitive types
-    /*
     @Override
-    public void writeCustomDataToNbt(net.minecraft.nbt.NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
+    public void writeData(net.minecraft.storage.WriteView view) {
+        super.writeData(view);
 
         if (targetPlayer != null) {
-            nbt.putString("TargetPlayer", targetPlayer.toString());
+            view.putString("TargetPlayer", targetPlayer.toString());
         }
 
         if (targetNest != null) {
-            nbt.putLong("TargetNest", targetNest.asLong());
+            view.putLong("TargetNest", targetNest.asLong());
         }
 
-        nbt.putInt("LeadingTimeout", leadingTimeout);
-        nbt.putBoolean("IsLeading", isLeading);
+        view.putInt("LeadingTimeout", leadingTimeout);
+        view.putBoolean("IsLeading", isLeading);
     }
 
     @Override
-    public void readCustomDataFromNbt(net.minecraft.nbt.NbtCompound nbt) {
-        super.readCustomDataFromNbt(nbt);
+    public void readData(net.minecraft.storage.ReadView view) {
+        super.readData(view);
 
-        if (nbt.contains("TargetPlayer")) {
+        view.getOptionalString("TargetPlayer").ifPresent(uuidString -> {
             try {
-                String uuidString = nbt.getString("TargetPlayer");
-                this.targetPlayer = UUID.fromString(uuidString);
+                if (!uuidString.isEmpty()) {
+                    this.targetPlayer = UUID.fromString(uuidString);
+                }
             } catch (IllegalArgumentException e) {
                 this.targetPlayer = null;
             }
-        }
+        });
 
-        if (nbt.contains("TargetNest")) {
-            this.targetNest = BlockPos.fromLong(nbt.getLong("TargetNest"));
-        }
+        view.getOptionalLong("TargetNest").ifPresent(value ->
+            this.targetNest = BlockPos.fromLong(value)
+        );
 
-        this.leadingTimeout = nbt.getInt("LeadingTimeout");
-        this.isLeading = nbt.getBoolean("IsLeading");
+        this.leadingTimeout = view.getInt("LeadingTimeout", 0);
+        this.isLeading = view.getBoolean("IsLeading", false);
     }
-    */
 }

@@ -123,42 +123,38 @@ public abstract class BasePollinatorEntity extends AnimalEntity {
         return isDefensive;
     }
 
-    // TODO: NBT methods need updating for 1.21.9+ API (method names/signatures changed)
-    // The NbtCompound getter methods now return Optional<T> instead of primitive types
-    /*
     @Override
-    public void writeCustomDataToNbt(net.minecraft.nbt.NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
+    public void writeData(net.minecraft.storage.WriteView view) {
+        super.writeData(view);
 
         if (linkedNest != null) {
-            nbt.putLong("LinkedNest", linkedNest.asLong());
+            view.putLong("LinkedNest", linkedNest.asLong());
         }
 
         if (linkedTree != null) {
-            nbt.putLong("LinkedTree", linkedTree.asLong());
+            view.putLong("LinkedTree", linkedTree.asLong());
         }
 
-        nbt.putInt("PollinationCooldown", pollinationCooldown);
-        nbt.putBoolean("NestDestroyed", nestDestroyed);
-        nbt.putString("BiomeType", biomeType);
+        view.putInt("PollinationCooldown", pollinationCooldown);
+        view.putBoolean("NestDestroyed", nestDestroyed);
+        view.putString("BiomeType", biomeType);
     }
 
     @Override
-    public void readCustomDataFromNbt(net.minecraft.nbt.NbtCompound nbt) {
-        super.readCustomDataFromNbt(nbt);
+    public void readData(net.minecraft.storage.ReadView view) {
+        super.readData(view);
 
-        if (nbt.contains("LinkedNest")) {
-            this.linkedNest = BlockPos.fromLong(nbt.getLong("LinkedNest"));
-        }
+        view.getOptionalLong("LinkedNest").ifPresent(value ->
+            this.linkedNest = BlockPos.fromLong(value)
+        );
 
-        if (nbt.contains("LinkedTree")) {
-            this.linkedTree = BlockPos.fromLong(nbt.getLong("LinkedTree"));
-        }
+        view.getOptionalLong("LinkedTree").ifPresent(value ->
+            this.linkedTree = BlockPos.fromLong(value)
+        );
 
-        this.pollinationCooldown = nbt.getInt("PollinationCooldown");
-        this.nestDestroyed = nbt.getBoolean("NestDestroyed");
+        this.pollinationCooldown = view.getInt("PollinationCooldown", 0);
+        this.nestDestroyed = view.getBoolean("NestDestroyed", false);
     }
-    */
 
     @Nullable
     @Override

@@ -165,56 +165,51 @@ public class PollinatorNestBlockEntity extends BlockEntity {
         return 1200 + (world != null ? world.random.nextInt(2400) : 1200);
     }
 
-    // TODO: NBT methods need updating for 1.21.9+ API (method names/signatures changed)
-    // The NbtCompound getter methods now return Optional<T> instead of primitive types
-    /*
     @Override
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.writeNbt(nbt, registryLookup);
+    public void writeData(net.minecraft.storage.WriteView view) {
+        super.writeData(view);
 
         if (linkedTree != null) {
-            nbt.putLong("LinkedTree", linkedTree.asLong());
+            view.putLong("LinkedTree", linkedTree.asLong());
         }
 
-        nbt.putString("BiomeType", biomeType);
-        nbt.putInt("PollinationCooldown", pollinationCooldown);
+        view.putString("BiomeType", biomeType);
+        view.putInt("PollinationCooldown", pollinationCooldown);
 
-        // Save active pollinators list as strings
-        NbtList pollinatorsList = new NbtList();
-        for (UUID uuid : activePollinators) {
-            NbtCompound uuidNbt = new NbtCompound();
-            uuidNbt.putString("UUID", uuid.toString());
-            pollinatorsList.add(uuidNbt);
+        // Save active pollinators list - store as comma-separated string
+        if (!activePollinators.isEmpty()) {
+            String uuidList = activePollinators.stream()
+                .map(UUID::toString)
+                .reduce((a, b) -> a + "," + b)
+                .orElse("");
+            view.putString("ActivePollinators", uuidList);
         }
-        nbt.put("ActivePollinators", pollinatorsList);
     }
 
     @Override
-    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.readNbt(nbt, registryLookup);
+    public void readData(net.minecraft.storage.ReadView view) {
+        super.readData(view);
 
-        if (nbt.contains("LinkedTree")) {
-            this.linkedTree = BlockPos.fromLong(nbt.getLong("LinkedTree"));
-        }
+        view.getOptionalLong("LinkedTree").ifPresent(value ->
+            this.linkedTree = BlockPos.fromLong(value)
+        );
 
-        this.biomeType = nbt.getString("BiomeType");
-        this.pollinationCooldown = nbt.getInt("PollinationCooldown");
+        this.biomeType = view.getString("BiomeType", "unknown");
+        this.pollinationCooldown = view.getInt("PollinationCooldown", 0);
 
-        // Load active pollinators list
+        // Load active pollinators list from comma-separated string
         this.activePollinators.clear();
-        if (nbt.contains("ActivePollinators", 9)) { // 9 is list type
-            NbtList pollinatorsList = nbt.getList("ActivePollinators", 10); // 10 is compound type
-            for (int i = 0; i < pollinatorsList.size(); i++) {
-                NbtCompound uuidNbt = pollinatorsList.getCompound(i);
-                if (uuidNbt != null && uuidNbt.contains("UUID", 8)) { // 8 is string type
+        view.getOptionalString("ActivePollinators").ifPresent(uuidList -> {
+            if (!uuidList.isEmpty()) {
+                String[] uuids = uuidList.split(",");
+                for (String uuidString : uuids) {
                     try {
-                        this.activePollinators.add(UUID.fromString(uuidNbt.getString("UUID")));
+                        this.activePollinators.add(UUID.fromString(uuidString.trim()));
                     } catch (IllegalArgumentException e) {
                         // Skip invalid UUIDs
                     }
                 }
             }
-        }
+        });
     }
-    */
 }

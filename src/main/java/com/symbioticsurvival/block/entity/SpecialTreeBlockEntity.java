@@ -108,31 +108,27 @@ public class SpecialTreeBlockEntity extends BlockEntity {
         return canBePollinated;
     }
 
-    // TODO: NBT methods need updating for 1.21.9+ API (method names/signatures changed)
-    // The NbtCompound getter methods now return Optional<T> instead of primitive types
-    /*
     @Override
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.writeNbt(nbt, registryLookup);
+    public void writeData(net.minecraft.storage.WriteView view) {
+        super.writeData(view);
 
         if (linkedNest != null) {
-            nbt.putLong("LinkedNest", linkedNest.asLong());
+            view.putLong("LinkedNest", linkedNest.asLong());
         }
 
-        nbt.putString("BiomeType", biomeType);
-        nbt.putBoolean("CanBePollinated", canBePollinated);
+        view.putString("BiomeType", biomeType);
+        view.putBoolean("CanBePollinated", canBePollinated);
     }
 
     @Override
-    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.readNbt(nbt, registryLookup);
+    public void readData(net.minecraft.storage.ReadView view) {
+        super.readData(view);
 
-        if (nbt.contains("LinkedNest")) {
-            this.linkedNest = BlockPos.fromLong(nbt.getLong("LinkedNest"));
-        }
+        view.getOptionalLong("LinkedNest").ifPresent(value ->
+            this.linkedNest = BlockPos.fromLong(value)
+        );
 
-        this.biomeType = nbt.getString("BiomeType");
-        this.canBePollinated = nbt.getBoolean("CanBePollinated");
+        this.biomeType = view.getString("BiomeType", "unknown");
+        this.canBePollinated = view.getBoolean("CanBePollinated", false);
     }
-    */
 }
