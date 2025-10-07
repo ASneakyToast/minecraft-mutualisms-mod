@@ -66,7 +66,7 @@ public class ModConfiguredFeatures {
             BlockStateProvider.of(ModBlocks.YUCCA_PLANT),
             new StraightTrunkPlacer(2, 1, 0), // Base height 2, random add 0-1
             BlockStateProvider.of(ModBlocks.YUCCA_LEAVES),
-            new BlobFoliagePlacer(ConstantIntProvider.create(1), ConstantIntProvider.create(0), 2),
+            new BlobFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), 3),
             new TwoLayersFeatureSize(0, 0, 0)
         ).decorators(List.of(
             new NestLinkingDecorator(ModBlocks.YUCCA_COCOON, "desert", 10, 8)
@@ -136,7 +136,7 @@ public class ModConfiguredFeatures {
             BlockStateProvider.of(ModBlocks.FLOWERING_BIRCH),
             new StraightTrunkPlacer(5, 1, 0), // Base height 5, random add 0-1
             BlockStateProvider.of(ModBlocks.FLOWERING_BIRCH_LEAVES),
-            new BlobFoliagePlacer(ConstantIntProvider.create(1), ConstantIntProvider.create(0), 2),
+            new BlobFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), 3),
             new TwoLayersFeatureSize(1, 0, 1)
         ).decorators(List.of(
             new NestLinkingDecorator(ModBlocks.BIRCH_BEE_HIVE, "birch_forest", 12, 8)
@@ -158,7 +158,7 @@ public class ModConfiguredFeatures {
             BlockStateProvider.of(ModBlocks.ARCTIC_WILLOW),
             new StraightTrunkPlacer(3, 1, 0), // Base height 3, random add 0-1
             BlockStateProvider.of(ModBlocks.ARCTIC_WILLOW_LEAVES),
-            new BlobFoliagePlacer(ConstantIntProvider.create(1), ConstantIntProvider.create(0), 2),
+            new BlobFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), 3),
             new TwoLayersFeatureSize(0, 0, 1)
         ).decorators(List.of(
             new NestLinkingDecorator(ModBlocks.BUMBLEBEE_NEST, "snowy", 12, 8)
