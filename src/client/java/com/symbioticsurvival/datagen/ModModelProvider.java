@@ -88,8 +88,8 @@ public class ModModelProvider extends FabricModelProvider {
      * Custom method to register leaves with fruit states using multipart blockstates.
      * Generates:
      * - Base leaves model with proper texture
-     * - Growing fruit overlay model (cross pattern)
-     * - Ripe fruit overlay model (cross pattern)
+     * - Growing fruit overlay model (cube with fruit texture on all faces)
+     * - Ripe fruit overlay model (cube with fruit texture on all faces)
      * - Multipart blockstate that conditionally applies overlays based on fruit_state
      */
     private void registerLeavesWithFruit(BlockStateModelGenerator gen, Block leaves) {
@@ -125,17 +125,17 @@ public class ModModelProvider extends FabricModelProvider {
         Identifier growingModelId = Identifier.of(SymbioticSurvival.MOD_ID, "block/" + blockName + "_growing_overlay");
         Identifier growingTexture = Identifier.of(SymbioticSurvival.MOD_ID, "block/fruit_growing_overlay");
 
-        Model crossModel = new Model(
-            Optional.of(Identifier.ofVanilla("block/cross")),
+        Model cubeOverlayModel = new Model(
+            Optional.of(Identifier.ofVanilla("block/cube_all")),
             Optional.empty(),
-            TextureKey.CROSS
+            TextureKey.ALL
         );
-        crossModel.upload(growingModelId, TextureMap.cross(growingTexture), gen.modelCollector);
+        cubeOverlayModel.upload(growingModelId, TextureMap.all(growingTexture), gen.modelCollector);
 
         // 3. Generate ripe fruit overlay model
         Identifier ripeModelId = Identifier.of(SymbioticSurvival.MOD_ID, "block/" + blockName + "_ripe_overlay");
         Identifier ripeTexture = Identifier.of(SymbioticSurvival.MOD_ID, "block/fruit_ripe_overlay");
-        crossModel.upload(ripeModelId, TextureMap.cross(ripeTexture), gen.modelCollector);
+        cubeOverlayModel.upload(ripeModelId, TextureMap.all(ripeTexture), gen.modelCollector);
 
         // 4. Generate multipart blockstate
         gen.blockStateCollector.accept(new MultipartBlockStateSupplier(leaves, baseModelId, growingModelId, ripeModelId));

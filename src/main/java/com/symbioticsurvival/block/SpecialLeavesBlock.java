@@ -58,6 +58,11 @@ public class SpecialLeavesBlock extends LeavesBlock {
     }
 
     @Override
+    protected boolean hasRandomTicks(BlockState state) {
+        return true; // Explicitly enable random ticking for fruit growth
+    }
+
+    @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         // Handle leaf decay first
         super.randomTick(state, world, pos, random);
@@ -70,14 +75,6 @@ public class SpecialLeavesBlock extends LeavesBlock {
 
         int fruitState = state.get(FRUIT_STATE);
         boolean isTreePollinated = isTreePollinated(world, pos);
-
-        // Debug logging
-        if (world.getTime() % 100 == 0) { // Log occasionally to avoid spam
-            com.symbioticsurvival.SymbioticSurvival.LOGGER.info(
-                "Leaf randomTick at {}: biome={}, distance={}, fruitState={}, isTreePollinated={}",
-                pos, biomeType, distance, fruitState, isTreePollinated
-            );
-        }
 
         // Check if parent tree is pollinated
         if (fruitState == 0 && isTreePollinated) {
