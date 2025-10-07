@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/leaves",
+  "textures": {
+    "all": "symbioticsurvival:block/conifer_variant_0"
+  }
+}

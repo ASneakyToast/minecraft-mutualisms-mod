@@ -54,6 +54,7 @@ public class ModPlacedFeatures {
             RarityFilterPlacementModifier.of(10), // 1 in 10 chunks
             SquarePlacementModifier.of(),
             PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP,
+            SurfaceWaterDepthFilterPlacementModifier.of(0), // Prevent underwater placement
             BiomePlacementModifier.of()
         );
 
@@ -75,17 +76,25 @@ public class ModPlacedFeatures {
                 RarityFilterPlacementModifier.of(5), // More common (1 in 5 chunks)
                 SquarePlacementModifier.of(),
                 PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP,
+                SurfaceWaterDepthFilterPlacementModifier.of(0), // Prevent underwater placement
                 BiomePlacementModifier.of()
             ));
 
         register(context, MANGROVE_VARIANT, configuredFeatures.getOrThrow(ModConfiguredFeatures.MANGROVE_VARIANT),
-            commonTreePlacement);
+            List.of(
+                RarityFilterPlacementModifier.of(10), // 1 in 10 chunks
+                SquarePlacementModifier.of(),
+                PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP,
+                SurfaceWaterDepthFilterPlacementModifier.of(5), // Allow shallow water (like vanilla mangroves)
+                BiomePlacementModifier.of()
+            ));
 
         register(context, GLOWING_MUSHROOM, configuredFeatures.getOrThrow(ModConfiguredFeatures.GLOWING_MUSHROOM),
             List.of(
                 RarityFilterPlacementModifier.of(15), // Rarer (1 in 15 chunks)
                 SquarePlacementModifier.of(),
                 PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP,
+                SurfaceWaterDepthFilterPlacementModifier.of(0), // Prevent underwater placement
                 BiomePlacementModifier.of()
             ));
 

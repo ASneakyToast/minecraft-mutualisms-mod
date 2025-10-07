@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "symbioticsurvival:item/orchard_bee_spawn_egg"
+  }
+}

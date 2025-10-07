@@ -1,0 +1,25 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "symbioticsurvival:block/yucca_leaves"
+      }
+    },
+    {
+      "apply": {
+        "model": "symbioticsurvival:block/yucca_leaves_growing_overlay"
+      },
+      "when": {
+        "fruit_state": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "symbioticsurvival:block/yucca_leaves_ripe_overlay"
+      },
+      "when": {
+        "fruit_state": "2"
+      }
+    }
+  ]
+}

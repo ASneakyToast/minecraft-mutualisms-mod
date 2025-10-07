@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/leaves",
+  "textures": {
+    "all": "symbioticsurvival:block/acacia_variant_0"
+  }
+}
