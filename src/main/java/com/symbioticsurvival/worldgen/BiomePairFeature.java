@@ -176,7 +176,7 @@ public class BiomePairFeature extends Feature<BiomePairConfig> {
         // Place trunk blocks
         BlockState trunkState = treeBlock.getDefaultState()
             .with(PillarBlock.AXIS, Direction.Axis.Y)
-            .with(SpecialTreeBlock.FRUIT_STATE, 0);
+            .with(SpecialTreeBlock.POLLINATED, false);
 
         for (int y = 0; y < trunkHeight; y++) {
             BlockPos trunkPos = basePos.up(y);

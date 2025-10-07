@@ -91,21 +91,9 @@ public class PollinateTreeGoal extends Goal {
         World world = pollinator.getEntityWorld();
         if (world.isClient()) return;
 
-        // Get tree block entity
-        if (world.getBlockEntity(targetTree) instanceof SpecialTreeBlockEntity treeEntity) {
-            // Pollinate the tree (move from state 0 to state 1)
-            if (world.getBlockState(targetTree).getBlock() instanceof SpecialTreeBlock) {
-                int currentState = world.getBlockState(targetTree).get(SpecialTreeBlock.FRUIT_STATE);
-
-                // Only pollinate immature trees (state 0 -> 1)
-                if (currentState == 0) {
-                    world.setBlockState(
-                        targetTree,
-                        world.getBlockState(targetTree).with(SpecialTreeBlock.FRUIT_STATE, 1),
-                        3
-                    );
-                }
-            }
+        // Pollinate the tree using SpecialTreeBlock's pollinate method
+        if (world.getBlockState(targetTree).getBlock() instanceof SpecialTreeBlock treeBlock) {
+            treeBlock.pollinate((net.minecraft.server.world.ServerWorld) world, targetTree);
         }
     }
 }
