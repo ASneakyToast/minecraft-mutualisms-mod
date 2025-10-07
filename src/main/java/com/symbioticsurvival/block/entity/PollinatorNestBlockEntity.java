@@ -1,6 +1,7 @@
 package com.symbioticsurvival.block.entity;
 
 import com.symbioticsurvival.SymbioticSurvival;
+import com.symbioticsurvival.block.SpecialTreeBlock;
 import com.symbioticsurvival.entity.pollinator.BasePollinatorEntity;
 import com.symbioticsurvival.registry.ModBlockEntities;
 import com.symbioticsurvival.registry.ModEntities;
@@ -28,6 +29,7 @@ public class PollinatorNestBlockEntity extends BlockEntity {
     private String biomeType;
     private int pollinationCooldown;
     private List<UUID> activePollinators = new ArrayList<>();
+    private boolean hasAttemptedLinking = false;
 
     public PollinatorNestBlockEntity(BlockPos pos, BlockState state, String biomeType) {
         super(ModBlockEntities.POLLINATOR_NEST, pos, state);
@@ -50,6 +52,13 @@ public class PollinatorNestBlockEntity extends BlockEntity {
 
         // Only tick every 20 game ticks (1 second) to reduce overhead
         if (world.getTime() % 20 != 0) return;
+
+        // Auto-link to nearby tree on first tick (if not already linked)
+        if (!blockEntity.hasAttemptedLinking && blockEntity.linkedTree == null) {
+            blockEntity.attemptTreeLinking(world, pos);
+            blockEntity.hasAttemptedLinking = true;
+            blockEntity.markDirty();
+        }
 
         // Countdown to next pollination (scaled by 20 since we tick every 20 ticks)
         if (blockEntity.pollinationCooldown > 0) {
@@ -132,6 +141,59 @@ public class PollinatorNestBlockEntity extends BlockEntity {
     }
 
     /**
+     * Attempt to find and link to a nearby tree
+     */
+    private void attemptTreeLinking(World world, BlockPos nestPos) {
+        int searchRadius = 16; // Search within 16 blocks
+        BlockPos closestTree = null;
+        double closestDistance = Double.MAX_VALUE;
+
+        // Search in a cube around the nest
+        for (int x = -searchRadius; x <= searchRadius; x++) {
+            for (int y = -searchRadius; y <= searchRadius; y++) {
+                for (int z = -searchRadius; z <= searchRadius; z++) {
+                    BlockPos checkPos = nestPos.add(x, y, z);
+                    BlockState state = world.getBlockState(checkPos);
+
+                    // Check if this is a special tree block
+                    if (state.getBlock() instanceof SpecialTreeBlock) {
+                        double distance = nestPos.getSquaredDistance(checkPos);
+                        if (distance < closestDistance) {
+                            closestDistance = distance;
+                            closestTree = checkPos;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Link to the closest tree found
+        if (closestTree != null) {
+            this.linkedTree = closestTree;
+
+            // Also link the tree back to this nest
+            BlockEntity treeEntity = world.getBlockEntity(closestTree);
+            if (treeEntity instanceof SpecialTreeBlockEntity tree) {
+                tree.linkToNest(nestPos, biomeType);
+            }
+
+            if (SymbioticSurvival.CONFIG.debug.enableDebugLogging) {
+                SymbioticSurvival.LOGGER.info(
+                    "Nest at {} auto-linked to tree at {}, distance={}",
+                    nestPos, closestTree, Math.sqrt(closestDistance)
+                );
+            }
+        } else {
+            if (SymbioticSurvival.CONFIG.debug.enableDebugLogging) {
+                SymbioticSurvival.LOGGER.warn(
+                    "Nest at {} could not find a tree within {} blocks",
+                    nestPos, searchRadius
+                );
+            }
+        }
+    }
+
+    /**
      * Link this nest to a tree
      */
     public void linkToTree(BlockPos treePos) {
@@ -181,6 +243,7 @@ public class PollinatorNestBlockEntity extends BlockEntity {
 
         nbt.putString("BiomeType", biomeType);
         nbt.putInt("PollinationCooldown", pollinationCooldown);
+        nbt.putBoolean("HasAttemptedLinking", hasAttemptedLinking);
 
         // TODO: Save active pollinators list
         // Skipping for now - not essential for core functionality
@@ -202,6 +265,10 @@ public class PollinatorNestBlockEntity extends BlockEntity {
 
         if (nbt.contains("PollinationCooldown")) {
             this.pollinationCooldown = nbt.getInt("PollinationCooldown");
+        }
+
+        if (nbt.contains("HasAttemptedLinking")) {
+            this.hasAttemptedLinking = nbt.getBoolean("HasAttemptedLinking");
         }
 
         // TODO: Load active pollinators list

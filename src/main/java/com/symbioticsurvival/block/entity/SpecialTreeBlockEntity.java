@@ -1,5 +1,6 @@
 package com.symbioticsurvival.block.entity;
 
+import com.symbioticsurvival.SymbioticSurvival;
 import com.symbioticsurvival.block.PollinatorNestBlock;
 import com.symbioticsurvival.registry.ModBlockEntities;
 import net.minecraft.block.BlockState;
@@ -17,6 +18,7 @@ public class SpecialTreeBlockEntity extends BlockEntity {
     private BlockPos linkedNest;
     private String biomeType;
     private boolean canBePollinated = false;
+    private boolean hasAttemptedLinking = false;
 
     public SpecialTreeBlockEntity(BlockPos pos, BlockState state, String biomeType) {
         super(ModBlockEntities.SPECIAL_TREE, pos, state);
@@ -37,6 +39,13 @@ public class SpecialTreeBlockEntity extends BlockEntity {
 
         // Only tick every 20 game ticks (1 second) to reduce overhead
         if (world.getTime() % 20 != 0) return;
+
+        // Auto-link to nearby nest on first tick (if not already linked)
+        if (!blockEntity.hasAttemptedLinking && blockEntity.linkedNest == null) {
+            blockEntity.attemptNestLinking(world, pos);
+            blockEntity.hasAttemptedLinking = true;
+            blockEntity.markDirty();
+        }
 
         // Verify nest still exists periodically (every 5 seconds = 100 ticks)
         if (world.getTime() % 100 == 0) {
@@ -100,6 +109,63 @@ public class SpecialTreeBlockEntity extends BlockEntity {
         }
     }
 
+    /**
+     * Attempt to find and link to a nearby nest
+     */
+    private void attemptNestLinking(World world, BlockPos treePos) {
+        int searchRadius = 16; // Search within 16 blocks
+        BlockPos closestNest = null;
+        double closestDistance = Double.MAX_VALUE;
+
+        // Search in a cube around the tree
+        for (int x = -searchRadius; x <= searchRadius; x++) {
+            for (int y = -searchRadius; y <= searchRadius; y++) {
+                for (int z = -searchRadius; z <= searchRadius; z++) {
+                    BlockPos checkPos = treePos.add(x, y, z);
+                    BlockState state = world.getBlockState(checkPos);
+
+                    // Check if this is a pollinator nest block
+                    if (state.getBlock() instanceof PollinatorNestBlock nestBlock) {
+                        // Optionally check biome type match
+                        if (biomeType.equals("unknown") || biomeType.equals(nestBlock.getBiomeType())) {
+                            double distance = treePos.getSquaredDistance(checkPos);
+                            if (distance < closestDistance) {
+                                closestDistance = distance;
+                                closestNest = checkPos;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Link to the closest nest found
+        if (closestNest != null) {
+            this.linkedNest = closestNest;
+            this.canBePollinated = true;
+
+            // Also link the nest back to this tree
+            BlockEntity nestEntity = world.getBlockEntity(closestNest);
+            if (nestEntity instanceof PollinatorNestBlockEntity nest) {
+                nest.linkToTree(treePos);
+            }
+
+            if (SymbioticSurvival.CONFIG.debug.enableDebugLogging) {
+                SymbioticSurvival.LOGGER.info(
+                    "Tree at {} auto-linked to nest at {}, distance={}",
+                    treePos, closestNest, Math.sqrt(closestDistance)
+                );
+            }
+        } else {
+            if (SymbioticSurvival.CONFIG.debug.enableDebugLogging) {
+                SymbioticSurvival.LOGGER.warn(
+                    "Tree at {} could not find a nest within {} blocks",
+                    treePos, searchRadius
+                );
+            }
+        }
+    }
+
     public BlockPos getLinkedNest() {
         return linkedNest;
     }
@@ -122,6 +188,7 @@ public class SpecialTreeBlockEntity extends BlockEntity {
 
         nbt.putString("BiomeType", biomeType);
         nbt.putBoolean("CanBePollinated", canBePollinated);
+        nbt.putBoolean("HasAttemptedLinking", hasAttemptedLinking);
     }
 
     @Override
@@ -140,6 +207,10 @@ public class SpecialTreeBlockEntity extends BlockEntity {
 
         if (nbt.contains("CanBePollinated")) {
             this.canBePollinated = nbt.getBoolean("CanBePollinated");
+        }
+
+        if (nbt.contains("HasAttemptedLinking")) {
+            this.hasAttemptedLinking = nbt.getBoolean("HasAttemptedLinking");
         }
     }
 }

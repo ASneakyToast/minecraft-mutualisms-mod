@@ -194,7 +194,7 @@ public class ModConfiguredFeatures {
             BlockStateProvider.of(ModBlocks.FIG_TREE),
             new GiantTrunkPlacer(12, 4, 0), // Base height 12, random add 0-4 (12-16 blocks)
             BlockStateProvider.of(ModBlocks.FIG_LEAVES),
-            new BlobFoliagePlacer(ConstantIntProvider.create(3), ConstantIntProvider.create(0), 4),
+            new BlobFoliagePlacer(ConstantIntProvider.create(3), ConstantIntProvider.create(0), 10),
             new TwoLayersFeatureSize(1, 0, 2)
         ).decorators(List.of(
             new NestLinkingDecorator(ModBlocks.FIG_WASP_NEST, "tropical", 16, 12)
@@ -205,7 +205,7 @@ public class ModConfiguredFeatures {
             BlockStateProvider.of(ModBlocks.YUCCA_PLANT),
             new GiantTrunkPlacer(6, 3, 0), // Base height 6, random add 0-3 (6-9 blocks)
             BlockStateProvider.of(ModBlocks.YUCCA_LEAVES),
-            new BlobFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), 4),
+            new BlobFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), 5),
             new TwoLayersFeatureSize(0, 0, 1)
         ).decorators(List.of(
             new NestLinkingDecorator(ModBlocks.YUCCA_COCOON, "desert", 14, 10)
@@ -216,7 +216,7 @@ public class ModConfiguredFeatures {
             BlockStateProvider.of(ModBlocks.ACACIA_VARIANT),
             new GiantTrunkPlacer(10, 3, 0), // Base height 10, random add 0-3 (10-13 blocks)
             BlockStateProvider.of(ModBlocks.ACACIA_VARIANT_LEAVES),
-            new BlobFoliagePlacer(ConstantIntProvider.create(3), ConstantIntProvider.create(0), 4),
+            new BlobFoliagePlacer(ConstantIntProvider.create(3), ConstantIntProvider.create(0), 8),
             new TwoLayersFeatureSize(1, 0, 2)
         ).decorators(List.of(
             new NestLinkingDecorator(ModBlocks.MASON_WASP_NEST, "savanna", 16, 12)
@@ -230,7 +230,7 @@ public class ModConfiguredFeatures {
             new SpruceFoliagePlacer(
                 UniformIntProvider.create(3, 4), // Radius
                 UniformIntProvider.create(0, 2), // Offset
-                UniformIntProvider.create(2, 3)  // Height
+                UniformIntProvider.create(5, 7)  // Height
             ),
             new TwoLayersFeatureSize(1, 0, 2)
         ).decorators(List.of(
@@ -242,7 +242,7 @@ public class ModConfiguredFeatures {
             BlockStateProvider.of(ModBlocks.MILKWEED),
             new GiantTrunkPlacer(4, 2, 0), // Base height 4, random add 0-2 (4-6 blocks)
             BlockStateProvider.of(ModBlocks.MILKWEED_LEAVES),
-            new BlobFoliagePlacer(ConstantIntProvider.create(1), ConstantIntProvider.create(0), 3),
+            new BlobFoliagePlacer(ConstantIntProvider.create(1), ConstantIntProvider.create(0), 5),
             new TwoLayersFeatureSize(0, 0, 1)
         ).decorators(List.of(
             new NestLinkingDecorator(ModBlocks.MONARCH_CHRYSALIS, "plains", 12, 10)
@@ -253,7 +253,7 @@ public class ModConfiguredFeatures {
             BlockStateProvider.of(ModBlocks.MANGROVE_VARIANT),
             new GiantTrunkPlacer(10, 3, 0), // Base height 10, random add 0-3 (10-13 blocks)
             BlockStateProvider.of(ModBlocks.MANGROVE_VARIANT_LEAVES),
-            new BlobFoliagePlacer(ConstantIntProvider.create(3), ConstantIntProvider.create(0), 4),
+            new BlobFoliagePlacer(ConstantIntProvider.create(3), ConstantIntProvider.create(0), 8),
             new TwoLayersFeatureSize(1, 0, 2)
         ).decorators(List.of(
             new NestLinkingDecorator(ModBlocks.MANGROVE_BEE_HIVE, "swamp", 16, 12)
@@ -264,7 +264,7 @@ public class ModConfiguredFeatures {
             BlockStateProvider.of(ModBlocks.GLOWING_MUSHROOM),
             new GiantTrunkPlacer(8, 3, 0), // Base height 8, random add 0-3 (8-11 blocks)
             BlockStateProvider.of(ModBlocks.GLOWING_MUSHROOM_LEAVES),
-            new BlobFoliagePlacer(ConstantIntProvider.create(3), ConstantIntProvider.create(0), 4),
+            new BlobFoliagePlacer(ConstantIntProvider.create(3), ConstantIntProvider.create(0), 6),
             new TwoLayersFeatureSize(0, 0, 2)
         ).decorators(List.of(
             new NestLinkingDecorator(ModBlocks.FUNGUS_GNAT_NEST, "mushroom", 16, 12)
@@ -275,7 +275,7 @@ public class ModConfiguredFeatures {
             BlockStateProvider.of(ModBlocks.FLOWERING_BIRCH),
             new GiantTrunkPlacer(12, 3, 0), // Base height 12, random add 0-3 (12-15 blocks)
             BlockStateProvider.of(ModBlocks.FLOWERING_BIRCH_LEAVES),
-            new BlobFoliagePlacer(ConstantIntProvider.create(3), ConstantIntProvider.create(0), 4),
+            new BlobFoliagePlacer(ConstantIntProvider.create(3), ConstantIntProvider.create(0), 9),
             new TwoLayersFeatureSize(1, 0, 2)
         ).decorators(List.of(
             new NestLinkingDecorator(ModBlocks.BIRCH_BEE_HIVE, "birch_forest", 16, 12)
@@ -286,7 +286,7 @@ public class ModConfiguredFeatures {
             BlockStateProvider.of(ModBlocks.ENHANCED_CHERRY),
             new GiantTrunkPlacer(10, 3, 0), // Base height 10, random add 0-3 (10-13 blocks)
             BlockStateProvider.of(ModBlocks.ENHANCED_CHERRY_LEAVES),
-            new BlobFoliagePlacer(ConstantIntProvider.create(3), ConstantIntProvider.create(0), 4),
+            new BlobFoliagePlacer(ConstantIntProvider.create(3), ConstantIntProvider.create(0), 8),
             new TwoLayersFeatureSize(1, 0, 2)
         ).decorators(List.of(
             new NestLinkingDecorator(ModBlocks.ORCHARD_BEE_NEST, "cherry_grove", 16, 12)
@@ -297,7 +297,7 @@ public class ModConfiguredFeatures {
             BlockStateProvider.of(ModBlocks.ARCTIC_WILLOW),
             new GiantTrunkPlacer(8, 2, 0), // Base height 8, random add 0-2 (8-10 blocks)
             BlockStateProvider.of(ModBlocks.ARCTIC_WILLOW_LEAVES),
-            new BlobFoliagePlacer(ConstantIntProvider.create(3), ConstantIntProvider.create(0), 4),
+            new BlobFoliagePlacer(ConstantIntProvider.create(3), ConstantIntProvider.create(0), 6),
             new TwoLayersFeatureSize(0, 0, 2)
         ).decorators(List.of(
             new NestLinkingDecorator(ModBlocks.BUMBLEBEE_NEST, "snowy", 16, 12)
