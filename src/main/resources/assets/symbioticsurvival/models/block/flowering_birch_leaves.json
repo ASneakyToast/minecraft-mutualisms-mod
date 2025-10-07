@@ -1,3 +1,6 @@
 {
-  "parent": "minecraft:block/birch_leaves"
+  "parent": "minecraft:block/birch_leaves",
+  "textures": {
+    "all": "minecraft:block/birch_leaves"
+  }
 }
