@@ -1,0 +1,62 @@
+{
+  "type": "minecraft:tree",
+  "config": {
+    "decorators": [
+      {
+        "type": "symbioticsurvival:nest_linking",
+        "biome_type": "cherry_grove",
+        "max_distance": 16,
+        "nest_block": "symbioticsurvival:orchard_bee_nest",
+        "placement_attempts": 12
+      }
+    ],
+    "dirt_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:dirt"
+      }
+    },
+    "foliage_placer": {
+      "type": "minecraft:blob_foliage_placer",
+      "height": 4,
+      "offset": 0,
+      "radius": 3
+    },
+    "foliage_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "symbioticsurvival:enhanced_cherry_leaves",
+        "Properties": {
+          "distance": "7",
+          "fruit_state": "0",
+          "persistent": "false",
+          "waterlogged": "false"
+        }
+      }
+    },
+    "force_dirt": false,
+    "ignore_vines": false,
+    "minimum_size": {
+      "type": "minecraft:two_layers_feature_size",
+      "limit": 1,
+      "lower_size": 0,
+      "upper_size": 2
+    },
+    "trunk_placer": {
+      "type": "minecraft:giant_trunk_placer",
+      "base_height": 10,
+      "height_rand_a": 3,
+      "height_rand_b": 0
+    },
+    "trunk_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "symbioticsurvival:enhanced_cherry",
+        "Properties": {
+          "axis": "y",
+          "pollinated": "false"
+        }
+      }
+    }
+  }
+}
