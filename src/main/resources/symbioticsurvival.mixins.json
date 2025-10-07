@@ -4,8 +4,6 @@
 	"package": "com.symbioticsurvival.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"BeeEntityMixin",
-		"FlowerBlockMixin"
 	],
 	"client": [],
 	"injectors": {

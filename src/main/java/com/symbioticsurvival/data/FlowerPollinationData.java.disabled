@@ -1,13 +1,11 @@
 package com.symbioticsurvival.data;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.symbioticsurvival.SymbioticSurvival;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Uuids;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.PersistentState;
-import net.minecraft.world.PersistentStateType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,33 +34,28 @@ public class FlowerPollinationData extends PersistentState {
             this(0, null);
         }
 
-        // Codec for PollinationInfo serialization
-        // Uses Minecraft's built-in UUID codec which properly handles null values
-        public static final Codec<PollinationInfo> CODEC = RecordCodecBuilder.create(instance ->
-            instance.group(
-                Codec.LONG.fieldOf("pollinationTime").forGetter(info -> info.pollinationTime),
-                Uuids.CODEC.optionalFieldOf("pollinatorUUID")
-                    .forGetter(info -> Optional.ofNullable(info.pollinatorUUID))
-            ).apply(instance, (time, uuidOpt) -> new PollinationInfo(time, uuidOpt.orElse(null)))
-        );
+        public NbtCompound toNbt() {
+            NbtCompound nbt = new NbtCompound();
+            nbt.putLong("time", pollinationTime);
+            if (pollinatorUUID != null) {
+                nbt.putUuid("uuid", pollinatorUUID);
+            }
+            return nbt;
+        }
+
+        public static PollinationInfo fromNbt(NbtCompound nbt) {
+            long time = nbt.getLong("time");
+            UUID uuid = nbt.containsUuid("uuid") ? nbt.getUuid("uuid") : null;
+            return new PollinationInfo(time, uuid);
+        }
     }
 
-    // Codec for the entire FlowerPollinationData
-    private static final Codec<FlowerPollinationData> CODEC = RecordCodecBuilder.create(instance ->
-        instance.group(
-            Codec.unboundedMap(BlockPos.CODEC, PollinationInfo.CODEC)
-                .fieldOf("flowers")
-                .forGetter(data -> data.flowers)
-        ).apply(instance, FlowerPollinationData::new)
-    );
-
-    // PersistentStateType for registration
-    private static final PersistentStateType<FlowerPollinationData> TYPE =
-        new PersistentStateType<>(
-            SymbioticSurvival.MOD_ID,        // Mod ID identifier
-            FlowerPollinationData::new,      // Constructor for new instances
-            CODEC,                            // Codec for deserialization
-            null                              // DataFixTypes (null for custom data)
+    //  PersistentState.Type for registration (NBT-based serialization)
+    private static final PersistentState.Type<FlowerPollinationData> TYPE =
+        new PersistentState.Type<>(
+            FlowerPollinationData::new,                 // Supplier for new instances
+            FlowerPollinationData::fromNbt,             // Deserializer from NBT
+            null                                        // DataFixTypes (null for custom data)
         );
 
     // Constructor for new instances
@@ -70,9 +63,26 @@ public class FlowerPollinationData extends PersistentState {
         this.flowers = new HashMap<>();
     }
 
-    // Constructor for loading from codec
-    private FlowerPollinationData(Map<BlockPos, PollinationInfo> flowers) {
-        this.flowers = new HashMap<>(flowers);
+    @Override
+    public NbtCompound writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        NbtCompound flowersNbt = new NbtCompound();
+        for (Map.Entry<BlockPos, PollinationInfo> entry : flowers.entrySet()) {
+            String key = entry.getKey().toShortString();
+            flowersNbt.put(key, entry.getValue().toNbt());
+        }
+        nbt.put("flowers", flowersNbt);
+        return nbt;
+    }
+
+    public static FlowerPollinationData fromNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        FlowerPollinationData data = new FlowerPollinationData();
+        NbtCompound flowersNbt = nbt.getCompound("flowers");
+        for (String key : flowersNbt.getKeys()) {
+            BlockPos pos = BlockPos.fromLong(Long.parseLong(key));
+            PollinationInfo info = PollinationInfo.fromNbt(flowersNbt.getCompound(key));
+            data.flowers.put(pos, info);
+        }
+        return data;
     }
 
     /**
@@ -126,6 +136,6 @@ public class FlowerPollinationData extends PersistentState {
      * This properly integrates with Minecraft's world save/load system.
      */
     public static FlowerPollinationData get(ServerWorld world) {
-        return world.getPersistentStateManager().getOrCreate(TYPE);
+        return world.getPersistentStateManager().getOrCreate(TYPE, "flower_pollination");
     }
 }
