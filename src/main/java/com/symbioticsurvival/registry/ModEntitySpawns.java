@@ -106,14 +106,13 @@ public class ModEntitySpawns {
     }
 
     private static void registerBiomeSpawns() {
-        // Small flying insects use AMBIENT spawn group (separate mob cap from animals)
-        // Larger pollinators use CREATURE spawn group
+        // All pollinators use CREATURE spawn group to prevent over-spawning
 
-        // Fig Wasp - Jungle biomes (small wasp = AMBIENT)
+        // Fig Wasp - Jungle biomes (small wasp = CREATURE)
         if (SymbioticSurvival.CONFIG.worldGen.enableTropical) {
             BiomeModifications.addSpawn(
                 BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE, BiomeKeys.BAMBOO_JUNGLE),
-                SpawnGroup.AMBIENT,
+                SpawnGroup.CREATURE,
                 ModEntities.FIG_WASP,
                 10,  // Reduced from 25 for performance
                 1,
@@ -121,11 +120,11 @@ public class ModEntitySpawns {
             );
         }
 
-        // Yucca Moth - Desert biomes (small moth = AMBIENT)
+        // Yucca Moth - Desert biomes (small moth = CREATURE)
         if (SymbioticSurvival.CONFIG.worldGen.enableDesert) {
             BiomeModifications.addSpawn(
                 BiomeSelectors.includeByKey(BiomeKeys.DESERT),
-                SpawnGroup.AMBIENT,
+                SpawnGroup.CREATURE,
                 ModEntities.YUCCA_MOTH,
                 8,  // Reduced from 20 for performance
                 1,
@@ -133,11 +132,11 @@ public class ModEntitySpawns {
             );
         }
 
-        // Monarch Butterfly - Plains biomes (butterfly = AMBIENT)
+        // Monarch Butterfly - Plains biomes (butterfly = CREATURE)
         if (SymbioticSurvival.CONFIG.worldGen.enablePlains) {
             BiomeModifications.addSpawn(
                 BiomeSelectors.includeByKey(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS),
-                SpawnGroup.AMBIENT,
+                SpawnGroup.CREATURE,
                 ModEntities.MONARCH_BUTTERFLY,
                 12,  // Reduced from 30 for performance
                 1,
@@ -145,11 +144,11 @@ public class ModEntitySpawns {
             );
         }
 
-        // Mason Wasp - Savanna biomes (small wasp = AMBIENT)
+        // Mason Wasp - Savanna biomes (small wasp = CREATURE)
         if (SymbioticSurvival.CONFIG.worldGen.enableSavanna) {
             BiomeModifications.addSpawn(
                 BiomeSelectors.includeByKey(BiomeKeys.SAVANNA, BiomeKeys.SAVANNA_PLATEAU, BiomeKeys.WINDSWEPT_SAVANNA),
-                SpawnGroup.AMBIENT,
+                SpawnGroup.CREATURE,
                 ModEntities.MASON_WASP,
                 8,  // Reduced from 20 for performance
                 1,
@@ -157,11 +156,11 @@ public class ModEntitySpawns {
             );
         }
 
-        // Sawfly - Taiga biomes (small fly = AMBIENT)
+        // Sawfly - Taiga biomes (small fly = CREATURE)
         if (SymbioticSurvival.CONFIG.worldGen.enableTaiga) {
             BiomeModifications.addSpawn(
                 BiomeSelectors.includeByKey(BiomeKeys.TAIGA, BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA),
-                SpawnGroup.AMBIENT,
+                SpawnGroup.CREATURE,
                 ModEntities.SAWFLY,
                 10,  // Reduced from 25 for performance
                 1,
@@ -179,20 +178,20 @@ public class ModEntitySpawns {
             2
         );
 
-        // Fungus Gnat - Dark Forest biomes (small gnat = AMBIENT)
+        // Fungus Gnat - Dark Forest biomes (small gnat = CREATURE)
         BiomeModifications.addSpawn(
             BiomeSelectors.includeByKey(BiomeKeys.DARK_FOREST),
-            SpawnGroup.AMBIENT,
+            SpawnGroup.CREATURE,
             ModEntities.FUNGUS_GNAT,
             14,  // Reduced from 35 for performance
             1,
             2
         );
 
-        // Birch Pollinator - Birch Forest biomes (small pollinator = AMBIENT)
+        // Birch Pollinator - Birch Forest biomes (small pollinator = CREATURE)
         BiomeModifications.addSpawn(
             BiomeSelectors.includeByKey(BiomeKeys.BIRCH_FOREST, BiomeKeys.OLD_GROWTH_BIRCH_FOREST),
-            SpawnGroup.AMBIENT,
+            SpawnGroup.CREATURE,
             ModEntities.BIRCH_POLLINATOR,
             10,  // Reduced from 25 for performance
             1,
@@ -240,7 +239,7 @@ public class ModEntitySpawns {
         );
 
         if (SymbioticSurvival.CONFIG.debug.enableDebugLogging) {
-            SymbioticSurvival.LOGGER.info("Configured natural spawning: AMBIENT group (small insects) and CREATURE group (bees/birds)");
+            SymbioticSurvival.LOGGER.info("Configured natural spawning: All pollinators use CREATURE group");
         }
     }
 }
