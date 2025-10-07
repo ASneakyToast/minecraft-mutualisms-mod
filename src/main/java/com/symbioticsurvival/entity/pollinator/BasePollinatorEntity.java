@@ -94,6 +94,14 @@ public abstract class BasePollinatorEntity extends AnimalEntity {
     }
 
     /**
+     * Flying entities don't take fall damage
+     */
+    @Override
+    public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
+        return false;
+    }
+
+    /**
      * Link this pollinator to a nest
      */
     public void linkToNest(BlockPos nestPos) {

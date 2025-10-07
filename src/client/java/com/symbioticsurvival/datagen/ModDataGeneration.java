@@ -41,6 +41,7 @@ public class ModDataGeneration implements DataGeneratorEntrypoint {
         var blockTagProvider = pack.addProvider(ModBlockTagProvider::new);
         pack.addProvider((output, registriesFuture) ->
             new ModItemTagProvider(output, registriesFuture, blockTagProvider));
+        pack.addProvider(ModEntityTagProvider::new);
 
         // Loot table provider - defines block drops
         pack.addProvider(ModBlockLootTableProvider::new);
