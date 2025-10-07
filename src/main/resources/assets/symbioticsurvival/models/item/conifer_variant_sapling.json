@@ -1,3 +1,6 @@
 {
-  "parent": "symbioticsurvival:block/conifer_variant_sapling"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "symbioticsurvival:item/conifer_variant_sapling"
+  }
 }

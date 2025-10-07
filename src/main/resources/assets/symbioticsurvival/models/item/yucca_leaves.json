@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "symbioticsurvival:item/mangrove_variant_sapling"
+    "layer0": "symbioticsurvival:item/yucca_leaves"
   }
 }

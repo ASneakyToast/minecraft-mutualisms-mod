@@ -1,3 +1,6 @@
 {
-  "parent": "symbioticsurvival:block/yucca_sapling"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "symbioticsurvival:item/yucca_sapling"
+  }
 }

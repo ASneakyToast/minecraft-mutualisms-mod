@@ -1,3 +1,6 @@
 {
-  "parent": "symbioticsurvival:block/milkweed_sapling"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "symbioticsurvival:item/milkweed_sapling"
+  }
 }
