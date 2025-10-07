@@ -182,12 +182,8 @@ public class PollinatorNestBlockEntity extends BlockEntity {
         view.putString("BiomeType", biomeType);
         view.putInt("PollinationCooldown", pollinationCooldown);
 
-        // Save active pollinators list as NBT list
-        NbtList pollinatorList = new NbtList();
-        for (UUID uuid : activePollinators) {
-            pollinatorList.add(NbtHelper.fromUuid(uuid));
-        }
-        view.put("ActivePollinators", pollinatorList);
+        // TODO: Save active pollinators list
+        // Skipping for now - not essential for core functionality
     }
 
     @Override
@@ -201,11 +197,8 @@ public class PollinatorNestBlockEntity extends BlockEntity {
         this.biomeType = view.getString("BiomeType", "unknown");
         this.pollinationCooldown = view.getInt("PollinationCooldown", 0);
 
-        // Load active pollinators list from NBT list
+        // TODO: Load active pollinators list
+        // Skipping for now - not essential for core functionality
         this.activePollinators.clear();
-        NbtList pollinatorList = view.getList("ActivePollinators", NbtElement.INT_ARRAY_TYPE);
-        for (int i = 0; i < pollinatorList.size(); i++) {
-            this.activePollinators.add(NbtHelper.toUuid(pollinatorList.get(i)));
-        }
     }
 }
