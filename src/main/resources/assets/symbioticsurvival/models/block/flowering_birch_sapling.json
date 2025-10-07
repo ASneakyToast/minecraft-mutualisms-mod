@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "symbioticsurvival:block/flowering_birch_sapling"
+  }
+}

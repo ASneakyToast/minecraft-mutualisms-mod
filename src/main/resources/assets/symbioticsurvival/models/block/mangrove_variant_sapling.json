@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "symbioticsurvival:block/mangrove_variant_sapling"
+  }
+}

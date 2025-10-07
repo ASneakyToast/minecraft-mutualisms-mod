@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "symbioticsurvival:block/fig_sapling"
+  }
+}

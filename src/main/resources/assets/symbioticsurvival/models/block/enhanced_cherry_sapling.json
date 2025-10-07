@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "symbioticsurvival:block/enhanced_cherry_sapling"
+  }
+}
