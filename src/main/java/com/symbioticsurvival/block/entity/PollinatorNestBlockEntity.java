@@ -8,6 +8,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtHelper;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.BlockPos;
@@ -180,14 +182,12 @@ public class PollinatorNestBlockEntity extends BlockEntity {
         view.putString("BiomeType", biomeType);
         view.putInt("PollinationCooldown", pollinationCooldown);
 
-        // Save active pollinators list - store as comma-separated string
-        if (!activePollinators.isEmpty()) {
-            String uuidList = activePollinators.stream()
-                .map(UUID::toString)
-                .reduce((a, b) -> a + "," + b)
-                .orElse("");
-            view.putString("ActivePollinators", uuidList);
+        // Save active pollinators list as NBT list
+        NbtList pollinatorList = new NbtList();
+        for (UUID uuid : activePollinators) {
+            pollinatorList.add(NbtHelper.fromUuid(uuid));
         }
+        view.put("ActivePollinators", pollinatorList);
     }
 
     @Override
@@ -201,19 +201,11 @@ public class PollinatorNestBlockEntity extends BlockEntity {
         this.biomeType = view.getString("BiomeType", "unknown");
         this.pollinationCooldown = view.getInt("PollinationCooldown", 0);
 
-        // Load active pollinators list from comma-separated string
+        // Load active pollinators list from NBT list
         this.activePollinators.clear();
-        view.getOptionalString("ActivePollinators").ifPresent(uuidList -> {
-            if (!uuidList.isEmpty()) {
-                String[] uuids = uuidList.split(",");
-                for (String uuidString : uuids) {
-                    try {
-                        this.activePollinators.add(UUID.fromString(uuidString.trim()));
-                    } catch (IllegalArgumentException e) {
-                        // Skip invalid UUIDs
-                    }
-                }
-            }
-        });
+        NbtList pollinatorList = view.getList("ActivePollinators", NbtElement.INT_ARRAY_TYPE);
+        for (int i = 0; i < pollinatorList.size(); i++) {
+            this.activePollinators.add(NbtHelper.toUuid(pollinatorList.get(i)));
+        }
     }
 }
