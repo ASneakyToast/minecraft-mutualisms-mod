@@ -20,6 +20,9 @@
 		],
 		"client": [
 			"com.symbioticsurvival.SymbioticSurvivalClient"
+		],
+		"fabric-datagen": [
+			"com.symbioticsurvival.datagen.ModDataGeneration"
 		]
 	},
 	"mixins": [
