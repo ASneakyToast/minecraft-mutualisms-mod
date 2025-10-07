@@ -4,8 +4,13 @@ import com.symbioticsurvival.worldgen.ModConfiguredFeatures;
 import com.symbioticsurvival.worldgen.ModPlacedFeatures;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
 import net.minecraft.registry.RegistryBuilder;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
+
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Data generation entry point for worldgen features.
@@ -16,8 +21,21 @@ public class ModDataGeneration implements DataGeneratorEntrypoint {
     public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 
-        // We're using dynamic registration via bootstrap methods
-        // No specific providers needed here, the registry builder will handle it
+        // Add dynamic registry provider for worldgen features
+        pack.addProvider((FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) ->
+            new FabricDynamicRegistryProvider(output, registriesFuture) {
+                @Override
+                protected void configure(RegistryWrapper.WrapperLookup registries, Entries entries) {
+                    entries.addAll(registries.getOrThrow(RegistryKeys.CONFIGURED_FEATURE));
+                    entries.addAll(registries.getOrThrow(RegistryKeys.PLACED_FEATURE));
+                }
+
+                @Override
+                public String getName() {
+                    return "Worldgen Features";
+                }
+            }
+        );
     }
 
     @Override
