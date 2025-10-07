@@ -1,9 +1,11 @@
 package com.symbioticsurvival.registry;
 
 import com.symbioticsurvival.SymbioticSurvival;
+import com.symbioticsurvival.block.ModSaplingBlock;
 import com.symbioticsurvival.block.PollinatorNestBlock;
 import com.symbioticsurvival.block.SpecialLeavesBlock;
 import com.symbioticsurvival.block.SpecialTreeBlock;
+import com.symbioticsurvival.worldgen.ModConfiguredFeatures;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.MapColor;
@@ -257,6 +259,118 @@ public class ModBlocks {
             .allowsSpawning((state, world, pos, type) -> false)
             .suffocates((state, world, pos) -> false)
             .blockVision((state, world, pos) -> false), "snowy"));
+
+    // Sapling Blocks
+    public static final Block FIG_SAPLING = registerBlock("fig_sapling",
+        new ModSaplingBlock(
+            ModSaplingBlock.createGenerator("fig_tree", ModConfiguredFeatures.FIG_TREE),
+            settingsWithKey("fig_sapling")
+                .mapColor(MapColor.DARK_GREEN)
+                .noCollision()
+                .ticksRandomly()
+                .breakInstantly()
+                .sounds(BlockSoundGroup.GRASS)
+        ));
+
+    public static final Block YUCCA_SAPLING = registerBlock("yucca_sapling",
+        new ModSaplingBlock(
+            ModSaplingBlock.createGenerator("yucca_plant", ModConfiguredFeatures.YUCCA_PLANT),
+            settingsWithKey("yucca_sapling")
+                .mapColor(MapColor.GREEN)
+                .noCollision()
+                .ticksRandomly()
+                .breakInstantly()
+                .sounds(BlockSoundGroup.GRASS)
+        ));
+
+    public static final Block ACACIA_VARIANT_SAPLING = registerBlock("acacia_variant_sapling",
+        new ModSaplingBlock(
+            ModSaplingBlock.createGenerator("acacia_variant", ModConfiguredFeatures.ACACIA_VARIANT),
+            settingsWithKey("acacia_variant_sapling")
+                .mapColor(MapColor.ORANGE)
+                .noCollision()
+                .ticksRandomly()
+                .breakInstantly()
+                .sounds(BlockSoundGroup.GRASS)
+        ));
+
+    public static final Block CONIFER_VARIANT_SAPLING = registerBlock("conifer_variant_sapling",
+        new ModSaplingBlock(
+            ModSaplingBlock.createGenerator("conifer_variant", ModConfiguredFeatures.CONIFER_VARIANT),
+            settingsWithKey("conifer_variant_sapling")
+                .mapColor(MapColor.SPRUCE_BROWN)
+                .noCollision()
+                .ticksRandomly()
+                .breakInstantly()
+                .sounds(BlockSoundGroup.GRASS)
+        ));
+
+    public static final Block MILKWEED_SAPLING = registerBlock("milkweed_sapling",
+        new ModSaplingBlock(
+            ModSaplingBlock.createGenerator("milkweed", ModConfiguredFeatures.MILKWEED),
+            settingsWithKey("milkweed_sapling")
+                .mapColor(MapColor.LIME)
+                .noCollision()
+                .ticksRandomly()
+                .breakInstantly()
+                .sounds(BlockSoundGroup.GRASS)
+        ));
+
+    public static final Block MANGROVE_VARIANT_SAPLING = registerBlock("mangrove_variant_sapling",
+        new ModSaplingBlock(
+            ModSaplingBlock.createGenerator("mangrove_variant", ModConfiguredFeatures.MANGROVE_VARIANT),
+            settingsWithKey("mangrove_variant_sapling")
+                .mapColor(MapColor.DARK_GREEN)
+                .noCollision()
+                .ticksRandomly()
+                .breakInstantly()
+                .sounds(BlockSoundGroup.GRASS)
+        ));
+
+    public static final Block GLOWING_MUSHROOM_SAPLING = registerBlock("glowing_mushroom_sapling",
+        new ModSaplingBlock(
+            ModSaplingBlock.createGenerator("glowing_mushroom", ModConfiguredFeatures.GLOWING_MUSHROOM),
+            settingsWithKey("glowing_mushroom_sapling")
+                .mapColor(MapColor.PURPLE)
+                .noCollision()
+                .ticksRandomly()
+                .breakInstantly()
+                .sounds(BlockSoundGroup.GRASS)
+                .luminance(state -> 5)
+        ));
+
+    public static final Block FLOWERING_BIRCH_SAPLING = registerBlock("flowering_birch_sapling",
+        new ModSaplingBlock(
+            ModSaplingBlock.createGenerator("flowering_birch", ModConfiguredFeatures.FLOWERING_BIRCH),
+            settingsWithKey("flowering_birch_sapling")
+                .mapColor(MapColor.WHITE)
+                .noCollision()
+                .ticksRandomly()
+                .breakInstantly()
+                .sounds(BlockSoundGroup.GRASS)
+        ));
+
+    public static final Block ENHANCED_CHERRY_SAPLING = registerBlock("enhanced_cherry_sapling",
+        new ModSaplingBlock(
+            ModSaplingBlock.createGenerator("enhanced_cherry", ModConfiguredFeatures.ENHANCED_CHERRY),
+            settingsWithKey("enhanced_cherry_sapling")
+                .mapColor(MapColor.PINK)
+                .noCollision()
+                .ticksRandomly()
+                .breakInstantly()
+                .sounds(BlockSoundGroup.CHERRY_SAPLING)
+        ));
+
+    public static final Block ARCTIC_WILLOW_SAPLING = registerBlock("arctic_willow_sapling",
+        new ModSaplingBlock(
+            ModSaplingBlock.createGenerator("arctic_willow", ModConfiguredFeatures.ARCTIC_WILLOW),
+            settingsWithKey("arctic_willow_sapling")
+                .mapColor(MapColor.CYAN)
+                .noCollision()
+                .ticksRandomly()
+                .breakInstantly()
+                .sounds(BlockSoundGroup.GRASS)
+        ));
 
     private static RegistryKey<Block> keyOf(String name) {
         return RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(SymbioticSurvival.MOD_ID, name));

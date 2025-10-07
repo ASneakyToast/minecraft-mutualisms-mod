@@ -46,6 +46,18 @@ public class ModItemGroups {
             entries.add(ModItems.ENHANCED_CHERRY_LEAVES);
             entries.add(ModItems.ARCTIC_WILLOW_LEAVES);
 
+            // Saplings
+            entries.add(ModItems.FIG_SAPLING);
+            entries.add(ModItems.YUCCA_SAPLING);
+            entries.add(ModItems.ACACIA_VARIANT_SAPLING);
+            entries.add(ModItems.CONIFER_VARIANT_SAPLING);
+            entries.add(ModItems.MILKWEED_SAPLING);
+            entries.add(ModItems.MANGROVE_VARIANT_SAPLING);
+            entries.add(ModItems.GLOWING_MUSHROOM_SAPLING);
+            entries.add(ModItems.FLOWERING_BIRCH_SAPLING);
+            entries.add(ModItems.ENHANCED_CHERRY_SAPLING);
+            entries.add(ModItems.ARCTIC_WILLOW_SAPLING);
+
             // Pollinator Nests
             entries.add(ModItems.FIG_WASP_NEST);
             entries.add(ModItems.YUCCA_COCOON);

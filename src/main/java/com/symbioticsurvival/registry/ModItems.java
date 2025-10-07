@@ -228,6 +228,37 @@ public class ModItems {
     public static final Item ARCTIC_WILLOW_LEAVES = registerItem("arctic_willow_leaves", settings ->
         new BlockItem(ModBlocks.ARCTIC_WILLOW_LEAVES, settings));
 
+    // Block Items - Saplings
+    public static final Item FIG_SAPLING = registerItem("fig_sapling", settings ->
+        new BlockItem(ModBlocks.FIG_SAPLING, settings));
+
+    public static final Item YUCCA_SAPLING = registerItem("yucca_sapling", settings ->
+        new BlockItem(ModBlocks.YUCCA_SAPLING, settings));
+
+    public static final Item ACACIA_VARIANT_SAPLING = registerItem("acacia_variant_sapling", settings ->
+        new BlockItem(ModBlocks.ACACIA_VARIANT_SAPLING, settings));
+
+    public static final Item CONIFER_VARIANT_SAPLING = registerItem("conifer_variant_sapling", settings ->
+        new BlockItem(ModBlocks.CONIFER_VARIANT_SAPLING, settings));
+
+    public static final Item MILKWEED_SAPLING = registerItem("milkweed_sapling", settings ->
+        new BlockItem(ModBlocks.MILKWEED_SAPLING, settings));
+
+    public static final Item MANGROVE_VARIANT_SAPLING = registerItem("mangrove_variant_sapling", settings ->
+        new BlockItem(ModBlocks.MANGROVE_VARIANT_SAPLING, settings));
+
+    public static final Item GLOWING_MUSHROOM_SAPLING = registerItem("glowing_mushroom_sapling", settings ->
+        new BlockItem(ModBlocks.GLOWING_MUSHROOM_SAPLING, settings));
+
+    public static final Item FLOWERING_BIRCH_SAPLING = registerItem("flowering_birch_sapling", settings ->
+        new BlockItem(ModBlocks.FLOWERING_BIRCH_SAPLING, settings));
+
+    public static final Item ENHANCED_CHERRY_SAPLING = registerItem("enhanced_cherry_sapling", settings ->
+        new BlockItem(ModBlocks.ENHANCED_CHERRY_SAPLING, settings));
+
+    public static final Item ARCTIC_WILLOW_SAPLING = registerItem("arctic_willow_sapling", settings ->
+        new BlockItem(ModBlocks.ARCTIC_WILLOW_SAPLING, settings));
+
     private static <T extends Item> T registerItem(String name, Function<Item.Settings, T> factory) {
         Identifier id = Identifier.of(SymbioticSurvival.MOD_ID, name);
         RegistryKey<Item> key = RegistryKey.of(RegistryKeys.ITEM, id);

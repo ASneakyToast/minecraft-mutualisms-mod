@@ -45,36 +45,56 @@
               "name": "symbioticsurvival:acacia_variant_leaves"
             },
             {
-              "type": "minecraft:item",
-              "conditions": [
+              "type": "minecraft:alternatives",
+              "children": [
                 {
-                  "chance": 0.05,
-                  "condition": "minecraft:random_chance"
-                }
-              ],
-              "functions": [
-                {
-                  "add": false,
-                  "count": {
-                    "type": "minecraft:uniform",
-                    "max": 2.0,
-                    "min": 1.0
-                  },
-                  "function": "minecraft:set_count"
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "chance": 0.05,
+                      "condition": "minecraft:random_chance"
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "function": "minecraft:explosion_decay"
+                    }
+                  ],
+                  "name": "symbioticsurvival:acacia_variant_sapling"
                 },
                 {
-                  "enchantment": "minecraft:fortune",
-                  "formula": "minecraft:uniform_bonus_count",
-                  "function": "minecraft:apply_bonus",
-                  "parameters": {
-                    "bonusMultiplier": 2
-                  }
-                },
-                {
-                  "function": "minecraft:explosion_decay"
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "chance": 0.05,
+                      "condition": "minecraft:random_chance"
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "add": false,
+                      "count": {
+                        "type": "minecraft:uniform",
+                        "max": 2.0,
+                        "min": 1.0
+                      },
+                      "function": "minecraft:set_count"
+                    },
+                    {
+                      "enchantment": "minecraft:fortune",
+                      "formula": "minecraft:uniform_bonus_count",
+                      "function": "minecraft:apply_bonus",
+                      "parameters": {
+                        "bonusMultiplier": 2
+                      }
+                    },
+                    {
+                      "function": "minecraft:explosion_decay"
+                    }
+                  ],
+                  "name": "minecraft:stick"
                 }
-              ],
-              "name": "minecraft:stick"
+              ]
             }
           ]
         }

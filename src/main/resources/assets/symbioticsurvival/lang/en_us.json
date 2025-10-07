@@ -22,6 +22,17 @@
   "block.symbioticsurvival.orchard_bee_nest": "Orchard Bee Nest",
   "block.symbioticsurvival.bumblebee_nest": "Bumblebee Nest",
 
+  "block.symbioticsurvival.fig_sapling": "Fig Sapling",
+  "block.symbioticsurvival.yucca_sapling": "Yucca Sapling",
+  "block.symbioticsurvival.acacia_variant_sapling": "Acacia Variant Sapling",
+  "block.symbioticsurvival.conifer_variant_sapling": "Conifer Sapling",
+  "block.symbioticsurvival.milkweed_sapling": "Milkweed Sapling",
+  "block.symbioticsurvival.mangrove_variant_sapling": "Mangrove Variant Sapling",
+  "block.symbioticsurvival.glowing_mushroom_sapling": "Glowing Mushroom Spore",
+  "block.symbioticsurvival.flowering_birch_sapling": "Flowering Birch Sapling",
+  "block.symbioticsurvival.enhanced_cherry_sapling": "Enhanced Cherry Sapling",
+  "block.symbioticsurvival.arctic_willow_sapling": "Arctic Willow Sapling",
+
   "item.symbioticsurvival.fig": "Fig",
   "item.symbioticsurvival.yucca_pod": "Yucca Pod",
   "item.symbioticsurvival.acacia_seed_pod": "Acacia Seed Pod",
