@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "symbioticsurvival:item/arctic_willow_leaves"
-  }
-}

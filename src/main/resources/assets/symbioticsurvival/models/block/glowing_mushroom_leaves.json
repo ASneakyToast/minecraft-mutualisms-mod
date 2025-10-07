@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/brown_mushroom_block",
-  "textures": {
-    "all": "minecraft:block/brown_mushroom_block"
-  }
-}
