@@ -136,36 +136,41 @@ public abstract class BasePollinatorEntity extends AnimalEntity {
     }
 
     @Override
-    public void writeData(net.minecraft.storage.WriteView view) {
-        super.writeData(view);
+    public void writeCustomDataToNbt(net.minecraft.nbt.NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
 
         if (linkedNest != null) {
-            view.putLong("LinkedNest", linkedNest.asLong());
+            nbt.putLong("LinkedNest", linkedNest.asLong());
         }
 
         if (linkedTree != null) {
-            view.putLong("LinkedTree", linkedTree.asLong());
+            nbt.putLong("LinkedTree", linkedTree.asLong());
         }
 
-        view.putInt("PollinationCooldown", pollinationCooldown);
-        view.putBoolean("NestDestroyed", nestDestroyed);
-        view.putString("BiomeType", biomeType);
+        nbt.putInt("PollinationCooldown", pollinationCooldown);
+        nbt.putBoolean("NestDestroyed", nestDestroyed);
+        nbt.putString("BiomeType", biomeType);
     }
 
     @Override
-    public void readData(net.minecraft.storage.ReadView view) {
-        super.readData(view);
+    public void readCustomDataFromNbt(net.minecraft.nbt.NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
 
-        view.getOptionalLong("LinkedNest").ifPresent(value ->
-            this.linkedNest = BlockPos.fromLong(value)
-        );
+        if (nbt.contains("LinkedNest")) {
+            this.linkedNest = BlockPos.fromLong(nbt.getLong("LinkedNest"));
+        }
 
-        view.getOptionalLong("LinkedTree").ifPresent(value ->
-            this.linkedTree = BlockPos.fromLong(value)
-        );
+        if (nbt.contains("LinkedTree")) {
+            this.linkedTree = BlockPos.fromLong(nbt.getLong("LinkedTree"));
+        }
 
-        this.pollinationCooldown = view.getInt("PollinationCooldown", 0);
-        this.nestDestroyed = view.getBoolean("NestDestroyed", false);
+        if (nbt.contains("PollinationCooldown")) {
+            this.pollinationCooldown = nbt.getInt("PollinationCooldown");
+        }
+        if (nbt.contains("NestDestroyed")) {
+            this.nestDestroyed = nbt.getBoolean("NestDestroyed");
+        }
+        // biomeType is final and set in constructor, don't load from NBT
     }
 
     @Nullable

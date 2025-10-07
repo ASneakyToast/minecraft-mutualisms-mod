@@ -127,26 +127,27 @@ public class HoneyguideEntity extends AnimalEntity {
     }
 
     @Override
-    public void writeData(net.minecraft.storage.WriteView view) {
-        super.writeData(view);
+    public void writeCustomDataToNbt(net.minecraft.nbt.NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
 
         if (targetPlayer != null) {
-            view.putString("TargetPlayer", targetPlayer.toString());
+            nbt.putString("TargetPlayer", targetPlayer.toString());
         }
 
         if (targetNest != null) {
-            view.putLong("TargetNest", targetNest.asLong());
+            nbt.putLong("TargetNest", targetNest.asLong());
         }
 
-        view.putInt("LeadingTimeout", leadingTimeout);
-        view.putBoolean("IsLeading", isLeading);
+        nbt.putInt("LeadingTimeout", leadingTimeout);
+        nbt.putBoolean("IsLeading", isLeading);
     }
 
     @Override
-    public void readData(net.minecraft.storage.ReadView view) {
-        super.readData(view);
+    public void readCustomDataFromNbt(net.minecraft.nbt.NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
 
-        view.getOptionalString("TargetPlayer").ifPresent(uuidString -> {
+        if (nbt.contains("TargetPlayer")) {
+            String uuidString = nbt.getString("TargetPlayer");
             try {
                 if (!uuidString.isEmpty()) {
                     this.targetPlayer = UUID.fromString(uuidString);
@@ -154,13 +155,17 @@ public class HoneyguideEntity extends AnimalEntity {
             } catch (IllegalArgumentException e) {
                 this.targetPlayer = null;
             }
-        });
+        }
 
-        view.getOptionalLong("TargetNest").ifPresent(value ->
-            this.targetNest = BlockPos.fromLong(value)
-        );
+        if (nbt.contains("TargetNest")) {
+            this.targetNest = BlockPos.fromLong(nbt.getLong("TargetNest"));
+        }
 
-        this.leadingTimeout = view.getInt("LeadingTimeout", 0);
-        this.isLeading = view.getBoolean("IsLeading", false);
+        if (nbt.contains("LeadingTimeout")) {
+            this.leadingTimeout = nbt.getInt("LeadingTimeout");
+        }
+        if (nbt.contains("IsLeading")) {
+            this.isLeading = nbt.getBoolean("IsLeading");
+        }
     }
 }

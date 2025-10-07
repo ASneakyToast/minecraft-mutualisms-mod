@@ -46,94 +46,38 @@ public class ModItems {
         new BaseFruitItem(settings, "snowy") {});
 
     // Spawn Eggs
-    // TODO: Add custom colors when color provider API is clarified for 1.21.9
     public static final Item HONEYGUIDE_SPAWN_EGG = registerItem("honeyguide_spawn_egg", settings ->
-        new SpawnEggItem(settings) {
-            @Override
-            public net.minecraft.entity.EntityType<?> getEntityType(net.minecraft.item.ItemStack stack) {
-                return ModEntities.HONEYGUIDE;
-            }
-        });
+        new SpawnEggItem(ModEntities.HONEYGUIDE, settings));
 
     public static final Item FIG_WASP_SPAWN_EGG = registerItem("fig_wasp_spawn_egg", settings ->
-        new SpawnEggItem(settings) {
-            @Override
-            public net.minecraft.entity.EntityType<?> getEntityType(net.minecraft.item.ItemStack stack) {
-                return ModEntities.FIG_WASP;
-            }
-        });
+        new SpawnEggItem(ModEntities.FIG_WASP, settings));
 
     public static final Item YUCCA_MOTH_SPAWN_EGG = registerItem("yucca_moth_spawn_egg", settings ->
-        new SpawnEggItem(settings) {
-            @Override
-            public net.minecraft.entity.EntityType<?> getEntityType(net.minecraft.item.ItemStack stack) {
-                return ModEntities.YUCCA_MOTH;
-            }
-        });
+        new SpawnEggItem(ModEntities.YUCCA_MOTH, settings));
 
     public static final Item MONARCH_BUTTERFLY_SPAWN_EGG = registerItem("monarch_butterfly_spawn_egg", settings ->
-        new SpawnEggItem(settings) {
-            @Override
-            public net.minecraft.entity.EntityType<?> getEntityType(net.minecraft.item.ItemStack stack) {
-                return ModEntities.MONARCH_BUTTERFLY;
-            }
-        });
+        new SpawnEggItem(ModEntities.MONARCH_BUTTERFLY, settings));
 
     public static final Item MASON_WASP_SPAWN_EGG = registerItem("mason_wasp_spawn_egg", settings ->
-        new SpawnEggItem(settings) {
-            @Override
-            public net.minecraft.entity.EntityType<?> getEntityType(net.minecraft.item.ItemStack stack) {
-                return ModEntities.MASON_WASP;
-            }
-        });
+        new SpawnEggItem(ModEntities.MASON_WASP, settings));
 
     public static final Item SAWFLY_SPAWN_EGG = registerItem("sawfly_spawn_egg", settings ->
-        new SpawnEggItem(settings) {
-            @Override
-            public net.minecraft.entity.EntityType<?> getEntityType(net.minecraft.item.ItemStack stack) {
-                return ModEntities.SAWFLY;
-            }
-        });
+        new SpawnEggItem(ModEntities.SAWFLY, settings));
 
     public static final Item MANGROVE_POLLINATOR_SPAWN_EGG = registerItem("mangrove_pollinator_spawn_egg", settings ->
-        new SpawnEggItem(settings) {
-            @Override
-            public net.minecraft.entity.EntityType<?> getEntityType(net.minecraft.item.ItemStack stack) {
-                return ModEntities.MANGROVE_POLLINATOR;
-            }
-        });
+        new SpawnEggItem(ModEntities.MANGROVE_POLLINATOR, settings));
 
     public static final Item FUNGUS_GNAT_SPAWN_EGG = registerItem("fungus_gnat_spawn_egg", settings ->
-        new SpawnEggItem(settings) {
-            @Override
-            public net.minecraft.entity.EntityType<?> getEntityType(net.minecraft.item.ItemStack stack) {
-                return ModEntities.FUNGUS_GNAT;
-            }
-        });
+        new SpawnEggItem(ModEntities.FUNGUS_GNAT, settings));
 
     public static final Item BIRCH_POLLINATOR_SPAWN_EGG = registerItem("birch_pollinator_spawn_egg", settings ->
-        new SpawnEggItem(settings) {
-            @Override
-            public net.minecraft.entity.EntityType<?> getEntityType(net.minecraft.item.ItemStack stack) {
-                return ModEntities.BIRCH_POLLINATOR;
-            }
-        });
+        new SpawnEggItem(ModEntities.BIRCH_POLLINATOR, settings));
 
     public static final Item ORCHARD_BEE_SPAWN_EGG = registerItem("orchard_bee_spawn_egg", settings ->
-        new SpawnEggItem(settings) {
-            @Override
-            public net.minecraft.entity.EntityType<?> getEntityType(net.minecraft.item.ItemStack stack) {
-                return ModEntities.ORCHARD_BEE;
-            }
-        });
+        new SpawnEggItem(ModEntities.ORCHARD_BEE, settings));
 
     public static final Item BUMBLEBEE_SPAWN_EGG = registerItem("bumblebee_spawn_egg", settings ->
-        new SpawnEggItem(settings) {
-            @Override
-            public net.minecraft.entity.EntityType<?> getEntityType(net.minecraft.item.ItemStack stack) {
-                return ModEntities.BUMBLEBEE;
-            }
-        });
+        new SpawnEggItem(ModEntities.BUMBLEBEE, settings));
 
     // Block Items - Special Trees
     public static final Item FIG_TREE = registerItem("fig_tree", settings ->

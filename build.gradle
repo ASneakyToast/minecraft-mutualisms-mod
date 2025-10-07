@@ -24,16 +24,13 @@ loom {
 			sourceSet sourceSets.client
 		}
 	}
+}
 
-	runs {
-		datagen {
-			inherit server
-			name "Data Generation"
-			vmArg "-Dfabric-api.datagen"
-			vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
-			vmArg "-Dfabric-api.datagen.modid=symbioticsurvival"
-			runDir "build/datagen"
-		}
+// Configure datagen for 1.21.4 - enables client-side model generation
+fabricApi {
+	configureDataGeneration {
+		client = true
+		createSourceSet = false  // Don't create separate sourceset, use existing main+client
 	}
 }
 
@@ -58,6 +55,9 @@ processResources {
 	filesMatching("fabric.mod.json") {
 		expand "version": inputs.properties.version
 	}
+
+	// Handle duplicate files from datagen
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -72,6 +72,11 @@ java {
 
 	sourceCompatibility = JavaVersion.VERSION_21
 	targetCompatibility = JavaVersion.VERSION_21
+}
+
+// Handle duplicates in sourcesJar task
+tasks.withType(Jar).configureEach {
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 jar {

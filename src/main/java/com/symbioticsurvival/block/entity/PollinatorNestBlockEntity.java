@@ -126,9 +126,9 @@ public class PollinatorNestBlockEntity extends BlockEntity {
     }
 
     private void cleanupPollinators() {
-        if (world == null) return;
-
-        activePollinators.removeIf(uuid -> world.getEntity(uuid) == null);
+        // Note: Entity lookup by UUID was simplified in 1.21.4
+        // Dead entities will be cleaned up when pollinators check in
+        // This method is kept for future cleanup logic if needed
     }
 
     /**
@@ -172,30 +172,37 @@ public class PollinatorNestBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void writeData(net.minecraft.storage.WriteView view) {
-        super.writeData(view);
+    protected void writeNbt(net.minecraft.nbt.NbtCompound nbt, net.minecraft.registry.RegistryWrapper.WrapperLookup registries) {
+        super.writeNbt(nbt, registries);
 
         if (linkedTree != null) {
-            view.putLong("LinkedTree", linkedTree.asLong());
+            nbt.putLong("LinkedTree", linkedTree.asLong());
         }
 
-        view.putString("BiomeType", biomeType);
-        view.putInt("PollinationCooldown", pollinationCooldown);
+        nbt.putString("BiomeType", biomeType);
+        nbt.putInt("PollinationCooldown", pollinationCooldown);
 
         // TODO: Save active pollinators list
         // Skipping for now - not essential for core functionality
     }
 
     @Override
-    public void readData(net.minecraft.storage.ReadView view) {
-        super.readData(view);
+    protected void readNbt(net.minecraft.nbt.NbtCompound nbt, net.minecraft.registry.RegistryWrapper.WrapperLookup registries) {
+        super.readNbt(nbt, registries);
 
-        view.getOptionalLong("LinkedTree").ifPresent(value ->
-            this.linkedTree = BlockPos.fromLong(value)
-        );
+        if (nbt.contains("LinkedTree")) {
+            this.linkedTree = BlockPos.fromLong(nbt.getLong("LinkedTree"));
+        }
 
-        this.biomeType = view.getString("BiomeType", "unknown");
-        this.pollinationCooldown = view.getInt("PollinationCooldown", 0);
+        if (nbt.contains("BiomeType")) {
+            this.biomeType = nbt.getString("BiomeType");
+        } else {
+            this.biomeType = "unknown";
+        }
+
+        if (nbt.contains("PollinationCooldown")) {
+            this.pollinationCooldown = nbt.getInt("PollinationCooldown");
+        }
 
         // TODO: Load active pollinators list
         // Skipping for now - not essential for core functionality

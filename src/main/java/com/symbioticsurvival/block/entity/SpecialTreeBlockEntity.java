@@ -113,26 +113,33 @@ public class SpecialTreeBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void writeData(net.minecraft.storage.WriteView view) {
-        super.writeData(view);
+    protected void writeNbt(net.minecraft.nbt.NbtCompound nbt, net.minecraft.registry.RegistryWrapper.WrapperLookup registries) {
+        super.writeNbt(nbt, registries);
 
         if (linkedNest != null) {
-            view.putLong("LinkedNest", linkedNest.asLong());
+            nbt.putLong("LinkedNest", linkedNest.asLong());
         }
 
-        view.putString("BiomeType", biomeType);
-        view.putBoolean("CanBePollinated", canBePollinated);
+        nbt.putString("BiomeType", biomeType);
+        nbt.putBoolean("CanBePollinated", canBePollinated);
     }
 
     @Override
-    public void readData(net.minecraft.storage.ReadView view) {
-        super.readData(view);
+    protected void readNbt(net.minecraft.nbt.NbtCompound nbt, net.minecraft.registry.RegistryWrapper.WrapperLookup registries) {
+        super.readNbt(nbt, registries);
 
-        view.getOptionalLong("LinkedNest").ifPresent(value ->
-            this.linkedNest = BlockPos.fromLong(value)
-        );
+        if (nbt.contains("LinkedNest")) {
+            this.linkedNest = BlockPos.fromLong(nbt.getLong("LinkedNest"));
+        }
 
-        this.biomeType = view.getString("BiomeType", "unknown");
-        this.canBePollinated = view.getBoolean("CanBePollinated", false);
+        if (nbt.contains("BiomeType")) {
+            this.biomeType = nbt.getString("BiomeType");
+        } else {
+            this.biomeType = "unknown";
+        }
+
+        if (nbt.contains("CanBePollinated")) {
+            this.canBePollinated = nbt.getBoolean("CanBePollinated");
+        }
     }
 }

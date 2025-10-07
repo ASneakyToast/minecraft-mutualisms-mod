@@ -28,7 +28,7 @@ public class SpecialLeavesBlock extends LeavesBlock {
 
     public static final MapCodec<SpecialLeavesBlock> CODEC = RecordCodecBuilder.mapCodec(instance ->
         instance.group(AbstractBlock.createSettingsCodec())
-            .apply(instance, settings -> new SpecialLeavesBlock(0.025f, settings, "unknown"))
+            .apply(instance, settings -> new SpecialLeavesBlock(settings, "unknown"))
     );
 
     // Fruit states: 0=none, 1=growing, 2=ripe
@@ -36,8 +36,8 @@ public class SpecialLeavesBlock extends LeavesBlock {
 
     private final String biomeType;
 
-    public SpecialLeavesBlock(float soundPitch, Settings settings, String biomeType) {
-        super(soundPitch, settings);
+    public SpecialLeavesBlock(Settings settings, String biomeType) {
+        super(settings);
         this.biomeType = biomeType;
         setDefaultState(getDefaultState()
             .with(DISTANCE, 7)
@@ -169,13 +169,6 @@ public class SpecialLeavesBlock extends LeavesBlock {
         return biomeType;
     }
 
-    /**
-     * Spawn leaf particles for this block.
-     * Required abstract method from LeavesBlock.
-     */
-    @Override
-    public void spawnLeafParticle(World world, BlockPos pos, Random random) {
-        // Spawn generic leaf particles - disabled for now
-        // Can be re-enabled with proper client-side particle spawning later
-    }
+    // Note: spawnLeafParticle method was removed in Minecraft 1.21.4
+    // Particle spawning can be handled via client-side code if needed
 }
