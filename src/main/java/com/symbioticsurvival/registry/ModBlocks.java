@@ -263,7 +263,14 @@ public class ModBlocks {
     // Sapling Blocks
     public static final Block FIG_SAPLING = registerBlock("fig_sapling",
         new ModSaplingBlock(
-            ModSaplingBlock.createGenerator("fig_tree", ModConfiguredFeatures.FIG_TREE, ModConfiguredFeatures.FIG_TREE_MEGA),
+            ModSaplingBlock.createGeneratorWithRare(
+                "fig_tree",
+                0.1f,  // 10% chance for rare fancy variant
+                ModConfiguredFeatures.FIG_TREE,
+                ModConfiguredFeatures.FIG_TREE_MEGA,
+                ModConfiguredFeatures.FIG_TREE_FANCY,
+                ModConfiguredFeatures.FIG_TREE_FANCY  // Use same fancy for both
+            ),
             settingsWithKey("fig_sapling")
                 .mapColor(MapColor.DARK_GREEN)
                 .noCollision()
@@ -318,7 +325,14 @@ public class ModBlocks {
 
     public static final Block MANGROVE_VARIANT_SAPLING = registerBlock("mangrove_variant_sapling",
         new ModSaplingBlock(
-            ModSaplingBlock.createGenerator("mangrove_variant", ModConfiguredFeatures.MANGROVE_VARIANT, ModConfiguredFeatures.MANGROVE_VARIANT_MEGA),
+            ModSaplingBlock.createGeneratorWithRare(
+                "mangrove_variant",
+                0.1f,  // 10% chance for rare forking variant
+                ModConfiguredFeatures.MANGROVE_VARIANT,
+                ModConfiguredFeatures.MANGROVE_VARIANT_MEGA,
+                ModConfiguredFeatures.MANGROVE_VARIANT_FORKING,
+                ModConfiguredFeatures.MANGROVE_VARIANT_FORKING  // Use same forking for both
+            ),
             settingsWithKey("mangrove_variant_sapling")
                 .mapColor(MapColor.DARK_GREEN)
                 .noCollision()
@@ -341,7 +355,14 @@ public class ModBlocks {
 
     public static final Block FLOWERING_BIRCH_SAPLING = registerBlock("flowering_birch_sapling",
         new ModSaplingBlock(
-            ModSaplingBlock.createGenerator("flowering_birch", ModConfiguredFeatures.FLOWERING_BIRCH, ModConfiguredFeatures.FLOWERING_BIRCH_MEGA),
+            ModSaplingBlock.createGeneratorWithRare(
+                "flowering_birch",
+                0.1f,  // 10% chance for rare branching variant
+                ModConfiguredFeatures.FLOWERING_BIRCH,
+                ModConfiguredFeatures.FLOWERING_BIRCH_MEGA,
+                ModConfiguredFeatures.FLOWERING_BIRCH_BRANCHING,
+                ModConfiguredFeatures.FLOWERING_BIRCH_BRANCHING  // Use same branching for both
+            ),
             settingsWithKey("flowering_birch_sapling")
                 .mapColor(MapColor.WHITE)
                 .noCollision()
@@ -352,7 +373,14 @@ public class ModBlocks {
 
     public static final Block ENHANCED_CHERRY_SAPLING = registerBlock("enhanced_cherry_sapling",
         new ModSaplingBlock(
-            ModSaplingBlock.createGenerator("enhanced_cherry", ModConfiguredFeatures.ENHANCED_CHERRY, ModConfiguredFeatures.ENHANCED_CHERRY_MEGA),
+            ModSaplingBlock.createGeneratorWithRare(
+                "enhanced_cherry",
+                0.15f,  // 15% chance for rare cherry blossom variant
+                ModConfiguredFeatures.ENHANCED_CHERRY,
+                ModConfiguredFeatures.ENHANCED_CHERRY_MEGA,
+                ModConfiguredFeatures.ENHANCED_CHERRY_BLOSSOM,
+                ModConfiguredFeatures.ENHANCED_CHERRY_BLOSSOM  // Use same blossom for both
+            ),
             settingsWithKey("enhanced_cherry_sapling")
                 .mapColor(MapColor.PINK)
                 .noCollision()

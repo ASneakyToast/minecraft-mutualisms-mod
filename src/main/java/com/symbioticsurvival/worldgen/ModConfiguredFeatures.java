@@ -12,10 +12,15 @@ import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.feature.size.TwoLayersFeatureSize;
 import net.minecraft.world.gen.foliage.BlobFoliagePlacer;
+import net.minecraft.world.gen.foliage.CherryFoliagePlacer;
 import net.minecraft.world.gen.foliage.SpruceFoliagePlacer;
 import net.minecraft.world.gen.stateprovider.BlockStateProvider;
+import net.minecraft.world.gen.trunk.BendingTrunkPlacer;
+import net.minecraft.world.gen.trunk.CherryTrunkPlacer;
+import net.minecraft.world.gen.trunk.ForkingTrunkPlacer;
 import net.minecraft.world.gen.trunk.GiantTrunkPlacer;
 import net.minecraft.world.gen.trunk.StraightTrunkPlacer;
+import net.minecraft.world.gen.trunk.UpwardsBranchingTrunkPlacer;
 
 import java.util.List;
 
@@ -67,6 +72,16 @@ public class ModConfiguredFeatures {
         registerKey("enhanced_cherry_mega");
     public static final RegistryKey<ConfiguredFeature<?, ?>> ARCTIC_WILLOW_MEGA =
         registerKey("arctic_willow_mega");
+
+    // Tree configured feature keys - Rare creative variants
+    public static final RegistryKey<ConfiguredFeature<?, ?>> FIG_TREE_FANCY =
+        registerKey("fig_tree_fancy");
+    public static final RegistryKey<ConfiguredFeature<?, ?>> ENHANCED_CHERRY_BLOSSOM =
+        registerKey("enhanced_cherry_blossom");
+    public static final RegistryKey<ConfiguredFeature<?, ?>> FLOWERING_BIRCH_BRANCHING =
+        registerKey("flowering_birch_branching");
+    public static final RegistryKey<ConfiguredFeature<?, ?>> MANGROVE_VARIANT_FORKING =
+        registerKey("mangrove_variant_forking");
 
     public static RegistryKey<ConfiguredFeature<?, ?>> registerKey(String name) {
         return RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, Identifier.of(SymbioticSurvival.MOD_ID, name));
@@ -301,6 +316,54 @@ public class ModConfiguredFeatures {
             new TwoLayersFeatureSize(0, 0, 2)
         ).decorators(List.of(
             new NestLinkingDecorator(ModBlocks.BUMBLEBEE_NEST, "snowy", 16, 12)
+        )).build());
+
+        // ===== RARE CREATIVE VARIANTS =====
+
+        // Fig Tree Fancy - Taller variant with wider canopy (tropical)
+        register(context, FIG_TREE_FANCY, Feature.TREE, new TreeFeatureConfig.Builder(
+            BlockStateProvider.of(ModBlocks.FIG_TREE),
+            new StraightTrunkPlacer(7, 3, 0), // Taller than regular (was 5+2)
+            BlockStateProvider.of(ModBlocks.FIG_LEAVES),
+            new BlobFoliagePlacer(ConstantIntProvider.create(3), ConstantIntProvider.create(0), 6), // Wider radius
+            new TwoLayersFeatureSize(1, 0, 2)
+        ).decorators(List.of(
+            new NestLinkingDecorator(ModBlocks.FIG_WASP_NEST, "tropical", 14, 10)
+        )).build());
+
+        // Enhanced Cherry Blossom - Taller with wider canopy (cherry grove)
+        register(context, ENHANCED_CHERRY_BLOSSOM, Feature.TREE, new TreeFeatureConfig.Builder(
+            BlockStateProvider.of(ModBlocks.ENHANCED_CHERRY),
+            new StraightTrunkPlacer(6, 2, 0), // Taller than regular (was 4+1)
+            BlockStateProvider.of(ModBlocks.ENHANCED_CHERRY_LEAVES),
+            new BlobFoliagePlacer(ConstantIntProvider.create(3), ConstantIntProvider.create(0), 5), // Wider canopy
+            new TwoLayersFeatureSize(1, 0, 2)
+        ).decorators(List.of(
+            new NestLinkingDecorator(ModBlocks.ORCHARD_BEE_NEST, "cherry_grove", 14, 10)
+        )).build());
+
+        // Flowering Birch Branching - Taller and bushier (birch forest)
+        register(context, FLOWERING_BIRCH_BRANCHING, Feature.TREE, new TreeFeatureConfig.Builder(
+            BlockStateProvider.of(ModBlocks.FLOWERING_BIRCH),
+            new StraightTrunkPlacer(7, 2, 0), // Taller than regular (was 5+1)
+            BlockStateProvider.of(ModBlocks.FLOWERING_BIRCH_LEAVES),
+            new BlobFoliagePlacer(ConstantIntProvider.create(3), ConstantIntProvider.create(0), 5), // Wider and taller canopy
+            new TwoLayersFeatureSize(1, 0, 2)
+        ).decorators(List.of(
+            new NestLinkingDecorator(ModBlocks.BIRCH_BEE_HIVE, "birch_forest", 14, 10)
+        )).build());
+
+        // Mangrove Variant Forking - Multi-trunk forking tree (swamp)
+        register(context, MANGROVE_VARIANT_FORKING, Feature.TREE, new TreeFeatureConfig.Builder(
+            BlockStateProvider.of(ModBlocks.MANGROVE_VARIANT),
+            new ForkingTrunkPlacer(
+                4, 1, 0  // Base height, random add
+            ),
+            BlockStateProvider.of(ModBlocks.MANGROVE_VARIANT_LEAVES),
+            new BlobFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), 4),
+            new TwoLayersFeatureSize(1, 0, 1)
+        ).decorators(List.of(
+            new NestLinkingDecorator(ModBlocks.MANGROVE_BEE_HIVE, "swamp", 12, 8)
         )).build());
     }
 

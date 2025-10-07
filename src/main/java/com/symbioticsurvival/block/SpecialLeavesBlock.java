@@ -63,39 +63,71 @@ public class SpecialLeavesBlock extends LeavesBlock {
         super.randomTick(state, world, pos, random);
 
         // Only grow fruit if leaves are still there and not decaying
-        if (state.get(DISTANCE) == 7) {
+        int distance = state.get(DISTANCE);
+        if (distance == 7) {
             return; // Leaf is decaying, no fruit growth
         }
 
         int fruitState = state.get(FRUIT_STATE);
+        boolean isTreePollinated = isTreePollinated(world, pos);
+
+        // Debug logging
+        if (world.getTime() % 100 == 0) { // Log occasionally to avoid spam
+            com.symbioticsurvival.SymbioticSurvival.LOGGER.info(
+                "Leaf randomTick at {}: biome={}, distance={}, fruitState={}, isTreePollinated={}",
+                pos, biomeType, distance, fruitState, isTreePollinated
+            );
+        }
 
         // Check if parent tree is pollinated
-        if (fruitState == 0 && isTreePollinated(world, pos)) {
+        if (fruitState == 0 && isTreePollinated) {
             // Start growing fruit (0 → 1)
             world.setBlockState(pos, state.with(FRUIT_STATE, 1));
+            com.symbioticsurvival.SymbioticSurvival.LOGGER.info(
+                "Leaf at {} started growing fruit (0→1)", pos
+            );
         } else if (fruitState == 1) {
             // Mature fruit (1 → 2)
             if (random.nextInt(5) == 0) { // 20% chance per random tick
                 world.setBlockState(pos, state.with(FRUIT_STATE, 2));
+                com.symbioticsurvival.SymbioticSurvival.LOGGER.info(
+                    "Leaf at {} fruit ripened (1→2)", pos
+                );
             }
         }
     }
 
     /**
-     * Check if the parent tree is pollinated by scanning upward
+     * Check if the parent tree is pollinated by scanning nearby for trunk blocks
      */
     private boolean isTreePollinated(World world, BlockPos leafPos) {
         int distance = leafPos.getY() > 0 ? world.getBlockState(leafPos).get(DISTANCE) : 7;
 
-        // Scan upward within the leaf's distance range to find trunk
+        // Scan downward first (trunks are typically below leaves)
         for (int y = 0; y <= distance + 2; y++) {
-            BlockPos checkPos = leafPos.up(y);
+            BlockPos checkPos = leafPos.down(y);
             BlockState checkState = world.getBlockState(checkPos);
 
             if (checkState.getBlock() instanceof SpecialTreeBlock treeBlock) {
                 // Found the tree trunk, check if it's pollinated
                 if (treeBlock.getBiomeType().equals(this.biomeType)) {
                     return checkState.get(SpecialTreeBlock.POLLINATED);
+                }
+            }
+        }
+
+        // Also check horizontally nearby (within 3 blocks, for wide canopies)
+        for (int x = -3; x <= 3; x++) {
+            for (int z = -3; z <= 3; z++) {
+                if (x == 0 && z == 0) continue; // Already checked vertical above
+
+                BlockPos checkPos = leafPos.add(x, 0, z);
+                BlockState checkState = world.getBlockState(checkPos);
+
+                if (checkState.getBlock() instanceof SpecialTreeBlock treeBlock) {
+                    if (treeBlock.getBiomeType().equals(this.biomeType)) {
+                        return checkState.get(SpecialTreeBlock.POLLINATED);
+                    }
                 }
             }
         }

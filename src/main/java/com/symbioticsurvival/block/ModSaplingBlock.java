@@ -17,6 +17,30 @@ public class ModSaplingBlock extends SaplingBlock {
     }
 
     /**
+     * Creates a SaplingGenerator with rare variant support.
+     * In 1.21, SaplingGenerator is final and uses a different constructor pattern.
+     */
+    public static SaplingGenerator createGeneratorWithRare(
+        String name,
+        float rareChance,
+        RegistryKey<ConfiguredFeature<?, ?>> regularVariant,
+        RegistryKey<ConfiguredFeature<?, ?>> megaVariant,
+        RegistryKey<ConfiguredFeature<?, ?>> rareRegularVariant,
+        RegistryKey<ConfiguredFeature<?, ?>> rareMegaVariant
+    ) {
+        return new SaplingGenerator(
+            name,
+            rareChance,
+            Optional.of(megaVariant),     // megaVariant - for 2x2 sapling arrangements
+            Optional.of(rareMegaVariant), // rareMegaVariant - rare 2x2 variant
+            Optional.of(regularVariant),  // regularVariant - for single saplings
+            Optional.of(rareRegularVariant), // rareRegularVariant - rare single variant
+            Optional.empty(),             // beesVariant - variant with bees
+            Optional.empty()              // rareBeesVariant - rare variant with bees
+        );
+    }
+
+    /**
      * Creates a SaplingGenerator for a tree feature with optional mega variant.
      * In 1.21, SaplingGenerator is final and uses a different constructor pattern.
      */
