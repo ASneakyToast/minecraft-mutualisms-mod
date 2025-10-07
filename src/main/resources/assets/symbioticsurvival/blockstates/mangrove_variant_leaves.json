@@ -1,46 +1,15 @@
 {
-  "variants": {
-    "distance=1,persistent=false": {
-      "model": "symbioticsurvival:block/mangrove_variant_leaves"
+  "multipart": [
+    {
+      "apply": { "model": "symbioticsurvival:block/mangrove_variant_leaves" }
     },
-    "distance=1,persistent=true": {
-      "model": "symbioticsurvival:block/mangrove_variant_leaves"
+    {
+      "when": { "fruit_state": "1" },
+      "apply": { "model": "symbioticsurvival:block/mangrove_variant_leaves_growing_overlay" }
     },
-    "distance=2,persistent=false": {
-      "model": "symbioticsurvival:block/mangrove_variant_leaves"
-    },
-    "distance=2,persistent=true": {
-      "model": "symbioticsurvival:block/mangrove_variant_leaves"
-    },
-    "distance=3,persistent=false": {
-      "model": "symbioticsurvival:block/mangrove_variant_leaves"
-    },
-    "distance=3,persistent=true": {
-      "model": "symbioticsurvival:block/mangrove_variant_leaves"
-    },
-    "distance=4,persistent=false": {
-      "model": "symbioticsurvival:block/mangrove_variant_leaves"
-    },
-    "distance=4,persistent=true": {
-      "model": "symbioticsurvival:block/mangrove_variant_leaves"
-    },
-    "distance=5,persistent=false": {
-      "model": "symbioticsurvival:block/mangrove_variant_leaves"
-    },
-    "distance=5,persistent=true": {
-      "model": "symbioticsurvival:block/mangrove_variant_leaves"
-    },
-    "distance=6,persistent=false": {
-      "model": "symbioticsurvival:block/mangrove_variant_leaves"
-    },
-    "distance=6,persistent=true": {
-      "model": "symbioticsurvival:block/mangrove_variant_leaves"
-    },
-    "distance=7,persistent=false": {
-      "model": "symbioticsurvival:block/mangrove_variant_leaves"
-    },
-    "distance=7,persistent=true": {
-      "model": "symbioticsurvival:block/mangrove_variant_leaves"
+    {
+      "when": { "fruit_state": "2" },
+      "apply": { "model": "symbioticsurvival:block/mangrove_variant_leaves_ripe_overlay" }
     }
-  }
+  ]
 }

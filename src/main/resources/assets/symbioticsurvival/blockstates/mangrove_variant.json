@@ -1,40 +1,28 @@
 {
-  "variants": {
-    "axis=y,fruit_state=0": {
-      "model": "symbioticsurvival:block/mangrove_variant_0"
+  "multipart": [
+    {
+      "when": { "axis": "y", "pollinated": "false" },
+      "apply": { "model": "symbioticsurvival:block/mangrove_variant_0" }
     },
-    "axis=y,fruit_state=1": {
-      "model": "symbioticsurvival:block/mangrove_variant_1"
+    {
+      "when": { "axis": "y", "pollinated": "true" },
+      "apply": { "model": "symbioticsurvival:block/mangrove_variant_1" }
     },
-    "axis=y,fruit_state=2": {
-      "model": "symbioticsurvival:block/mangrove_variant_2"
+    {
+      "when": { "axis": "x", "pollinated": "false" },
+      "apply": { "model": "symbioticsurvival:block/mangrove_variant_0", "x": 90, "y": 90 }
     },
-    "axis=x,fruit_state=0": {
-      "model": "symbioticsurvival:block/mangrove_variant_0",
-      "x": 90,
-      "y": 90
+    {
+      "when": { "axis": "x", "pollinated": "true" },
+      "apply": { "model": "symbioticsurvival:block/mangrove_variant_1", "x": 90, "y": 90 }
     },
-    "axis=x,fruit_state=1": {
-      "model": "symbioticsurvival:block/mangrove_variant_1",
-      "x": 90,
-      "y": 90
+    {
+      "when": { "axis": "z", "pollinated": "false" },
+      "apply": { "model": "symbioticsurvival:block/mangrove_variant_0", "x": 90 }
     },
-    "axis=x,fruit_state=2": {
-      "model": "symbioticsurvival:block/mangrove_variant_2",
-      "x": 90,
-      "y": 90
-    },
-    "axis=z,fruit_state=0": {
-      "model": "symbioticsurvival:block/mangrove_variant_0",
-      "x": 90
-    },
-    "axis=z,fruit_state=1": {
-      "model": "symbioticsurvival:block/mangrove_variant_1",
-      "x": 90
-    },
-    "axis=z,fruit_state=2": {
-      "model": "symbioticsurvival:block/mangrove_variant_2",
-      "x": 90
+    {
+      "when": { "axis": "z", "pollinated": "true" },
+      "apply": { "model": "symbioticsurvival:block/mangrove_variant_1", "x": 90 }
     }
-  }
+  ]
 }
